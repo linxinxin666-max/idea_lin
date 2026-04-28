@@ -5,5 +5,20 @@
       "src": "**/*",
       "use": "@vercel/static"
     }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "ALLOWALL"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://*.feishu.cn https://*.larksuite.com https://*.feishuapp.cn https://*.feishuapp.com"
+        }
+      ]
+    }
   ]
 }
