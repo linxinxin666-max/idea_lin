@@ -1,0 +1,11 @@
+{
+  "setting": {
+    "es6": true,
+    "minified": true
+  },
+  "appid": "cli_a9676f877eb85ceb",
+  "projectname": "blank",
+  "blocks": [
+    "block/index"
+  ]
+}
