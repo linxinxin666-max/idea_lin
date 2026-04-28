@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-Frame-Options" content="ALLOWALL">
+    <meta name="referrer" content="no-referrer">
     <title>idea creator - 抖音生活服务素材神器</title>
     <style>
         * {
@@ -11,10 +13,11 @@
             box-sizing: border-box;
         }
         
-        body {
+        html, body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0f1e33 100%);
             min-height: 100vh;
+            height: 100%;
             color: #ffffff;
             overflow-x: hidden;
             -webkit-text-size-adjust: 100%;
@@ -1649,10 +1652,14 @@
                 const professional = items.map(i => buildLiveMomentTemplate(i, 'professional')).filter(Boolean);
                 const friendly = items.map(i => buildLiveMomentTemplate(i, 'friendly')).filter(Boolean);
 
-                contentLibrary.professional.live = professional;
-                contentLibrary.friendly.live = friendly;
+                if (professional && professional.length > 0) {
+                    contentLibrary.professional.live = professional;
+                }
+                if (friendly && friendly.length > 0) {
+                    contentLibrary.friendly.live = friendly;
+                }
             } catch (e) {
-                console.error(e);
+                console.warn('加载直播素材失败，使用默认内容:', e);
             }
         }
 
@@ -1682,10 +1689,14 @@
                 const professional = items.map(i => buildCourseMomentTemplate(i, 'professional')).filter(Boolean);
                 const friendly = items.map(i => buildCourseMomentTemplate(i, 'friendly')).filter(Boolean);
 
-                contentLibrary.professional.business = [...professional, ...(contentLibrary.professional.business || [])];
-                contentLibrary.friendly.business = [...friendly, ...(contentLibrary.friendly.business || [])];
+                if (professional && professional.length > 0) {
+                    contentLibrary.professional.business = [...professional, ...(contentLibrary.professional.business || [])];
+                }
+                if (friendly && friendly.length > 0) {
+                    contentLibrary.friendly.business = [...friendly, ...(contentLibrary.friendly.business || [])];
+                }
             } catch (e) {
-                console.error(e);
+                console.warn('加载课程素材失败，使用默认内容:', e);
             }
         }
         
@@ -2066,18 +2077,32 @@
             </div>`;
         }
 
-        // 初始化
+        // 初始化 - 添加更好的错误处理
         document.addEventListener('DOMContentLoaded', () => {
-            const closeBtn = document.getElementById('imageModalClose');
-            if (closeBtn) closeBtn.addEventListener('click', hideImageModal);
-            extendHolidayLibrary();
-            renderMaterials();
-            Promise.all([loadLiveMaterials(), loadCourseBusinessMaterials()]).finally(() => {
-                initBDSelectors();
-                updateStatsDisplay();
-                initWeather();
-                initCountdown();
-            });
+            try {
+                const closeBtn = document.getElementById('imageModalClose');
+                if (closeBtn) closeBtn.addEventListener('click', hideImageModal);
+                
+                extendHolidayLibrary();
+                renderMaterials();
+                
+                // 尝试加载JSON，但即使失败也继续初始化
+                Promise.all([
+                    loadLiveMaterials().catch(e => console.warn('加载直播素材失败:', e)),
+                    loadCourseBusinessMaterials().catch(e => console.warn('加载课程素材失败:', e))
+                ]).finally(() => {
+                    initBDSelectors();
+                    updateStatsDisplay();
+                    initWeather();
+                    initCountdown();
+                });
+            } catch (e) {
+                console.error('初始化时发生错误:', e);
+                // 即使出错也尝试基本渲染
+                try { renderMaterials(); } catch {}
+                try { initWeather(); } catch {}
+                try { initCountdown(); } catch {}
+            }
         });
     </script>
 </body>
