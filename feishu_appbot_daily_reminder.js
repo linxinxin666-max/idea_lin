@@ -1,4 +1,17 @@
 const https = require('https');
+const fs = require('fs');
+const path = require('path');
+
+const PUBLIC_DEMO_URL_FILE = path.join(__dirname, 'public_demo_url.txt');
+
+function readConfiguredDemoUrl() {
+  try {
+    const v = fs.readFileSync(PUBLIC_DEMO_URL_FILE, 'utf8').trim();
+    return v ? v.replace(/\/+$/, '') : '';
+  } catch (e) {
+    return '';
+  }
+}
 
 function requiredEnv(name) {
   const v = (process.env[name] || '').trim();
@@ -87,18 +100,19 @@ async function getTenantAccessToken(appId, appSecret) {
   return res.body.tenant_access_token;
 }
 
-function buildCard({ publicBaseUrl }) {
-  const baseUrl = (publicBaseUrl || '').replace(/\/+$/, '');
-  const demoUrl = baseUrl ? `${baseUrl}/demo.html` : '';
+function buildCard({ publicBaseUrl, publicDemoUrl }) {
+  const fileUrl = readConfiguredDemoUrl();
+  const demoUrl = (publicDemoUrl || '').trim().replace(/\/+$/, '') || fileUrl || ((publicBaseUrl || '').replace(/\/+$/, '') ? `${(publicBaseUrl || '').replace(/\/+$/, '')}/demo.html` : '');
   const now = new Date();
   const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const linkLine = demoUrl ? `\n\n🔗 工具入口：${demoUrl}` : '';
 
   const elements = [
     {
       tag: 'div',
       text: {
         tag: 'lark_md',
-        content: `**⏰ 12:00 提醒**\n\n今天（${dateStr}）记得发布朋友圈～\n\n建议动作：\n1️⃣ 打开素材工具挑一条「经营技巧 / 直播动态」\n2️⃣ 复制文案 + 保存封面图\n3️⃣ 去企微朋友圈发布`
+        content: `**⏰ 12:00 提醒**\n\n今天（${dateStr}）记得发布朋友圈～\n\n建议动作：\n1️⃣ 打开素材工具挑一条「经营技巧 / 直播动态」\n2️⃣ 复制文案 + 保存封面图\n3️⃣ 去企微朋友圈发布${linkLine}`
       }
     }
   ];
@@ -136,15 +150,20 @@ async function sendToChat({ tenantToken, chatId, card }) {
 
 async function main() {
   const dryRun = process.argv.includes('--dry-run');
+  if (!dryRun && String(process.env.ENABLE_FEISHU_APPBOT_REMINDER || '').trim() !== 'true') {
+    process.stdout.write('已禁用应用机器人提醒（如需启用请设置 ENABLE_FEISHU_APPBOT_REMINDER=true）\n');
+    return;
+  }
   const appId = dryRun ? optionalEnv('FEISHU_APP_ID', 'cli_xxx') : requiredEnv('FEISHU_APP_ID');
   const appSecret = dryRun ? optionalEnv('FEISHU_APP_SECRET', 'secret_xxx') : requiredEnv('FEISHU_APP_SECRET');
   const chatIdsRaw = dryRun ? optionalEnv('FEISHU_CHAT_IDS', 'oc_xxx') : requiredEnv('FEISHU_CHAT_IDS');
   const publicBaseUrl = optionalEnv('PUBLIC_BASE_URL', '');
+  const publicDemoUrl = optionalEnv('PUBLIC_DEMO_URL', '');
 
   const chatIds = chatIdsRaw.split(',').map(s => s.trim()).filter(Boolean);
   if (chatIds.length === 0) throw new Error('FEISHU_CHAT_IDS 不能为空');
 
-  const card = buildCard({ publicBaseUrl });
+  const card = buildCard({ publicBaseUrl, publicDemoUrl });
   if (dryRun) {
     process.stdout.write(JSON.stringify({ chatIds, card }, null, 2) + '\n');
     return;
@@ -163,4 +182,3 @@ main().catch((e) => {
   process.stderr.write(String(e && e.stack ? e.stack : e) + '\n');
   process.exit(1);
 });
-

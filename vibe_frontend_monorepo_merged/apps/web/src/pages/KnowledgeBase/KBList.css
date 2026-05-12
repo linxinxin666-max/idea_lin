@@ -1,0 +1,60 @@
+.kb-list-page {
+  padding: 28px 32px 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ── header ──────────────────────────────── */
+.kb-list-page-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.kb-list-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--semi-color-text-0);
+  margin: 0;
+}
+
+.kb-list-page-count {
+  font-size: 13px;
+  color: var(--semi-color-text-2);
+  background: var(--semi-color-fill-1);
+  padding: 1px 8px;
+  border-radius: 10px;
+}
+
+.kb-list-page-actions {
+  margin-left: auto;
+}
+
+/* ── toolbar ─────────────────────────────── */
+.kb-list-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.kb-list-search-input {
+  width: 260px;
+}
+
+.kb-list-toolbar-right {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+/* ── loading ─────────────────────────────── */
+.kb-list-loading-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+}

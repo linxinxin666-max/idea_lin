@@ -1,0 +1,101 @@
+.step-batch-evaluation {
+  padding: 24px;
+  height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.step-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #1d2129;
+}
+
+.step-desc {
+  font-size: 14px;
+  color: #86909c;
+  margin: 0 0 24px 0;
+}
+
+.evaluation-config-card {
+  flex-shrink: 0;
+}
+
+.config-section {
+  margin-bottom: 20px;
+}
+
+.config-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.config-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.config-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1d2129;
+}
+
+.action-section {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.evaluation-results-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.evaluation-results-card .semi-card-body {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.results-summary {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e6eb;
+}
+
+.detail-scores-modal {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.detail-score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e6eb;
+}
+
+.detail-score-item:last-child {
+  border-bottom: none;
+}
+
+.detail-score-label {
+  font-size: 14px;
+  color: #1d2129;
+  font-weight: 500;
+}
+
+.detail-score-value {
+  font-size: 16px;
+  font-weight: 600;
+}

@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/self_help/",
+      "permanent": false
+    },
+    {
+      "source": "/self_help",
+      "destination": "/self_help/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/self_help/assets/:path*",
+      "destination": "/assets/:path*"
+    },
+    {
+      "source": "/self_help/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}

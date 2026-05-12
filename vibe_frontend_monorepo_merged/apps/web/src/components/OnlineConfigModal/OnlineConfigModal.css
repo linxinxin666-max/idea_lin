@@ -1,0 +1,53 @@
+.ocm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 4px 0;
+}
+
+.ocm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ocm-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--semi-color-text-0);
+}
+
+.ocm-label.ocm-required::before {
+  content: '* ';
+  color: var(--semi-color-danger);
+}
+
+.ocm-divider {
+  height: 1px;
+  background: var(--semi-color-border);
+  margin: 4px 0;
+}
+
+.ocm-nl-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ocm-error {
+  color: var(--semi-color-danger);
+  font-size: 13px;
+  flex: 1;
+}
+
+.ocm-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ocm-footer-btns {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}

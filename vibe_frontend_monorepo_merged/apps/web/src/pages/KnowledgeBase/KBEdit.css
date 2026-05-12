@@ -1,0 +1,104 @@
+.kb-edit-page {
+  padding: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.kb-edit-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.kb-edit-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kb-edit-tag-section {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.kb-edit-table-wrap {
+  flex: 1;
+}
+
+.kb-editable-cell {
+  position: relative;
+  cursor: pointer;
+  min-height: 22px;
+  padding: 4px 0;
+  border-radius: 4px;
+}
+
+.kb-editable-cell:hover {
+  background: var(--semi-color-fill-0);
+}
+
+.kb-editable-cell:hover::after {
+  content: '✏️';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+.kb-char-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--semi-color-text-2);
+}
+
+.kb-char-count-warning {
+  color: var(--semi-color-danger);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.kb-add-item-btn {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.kb-bottom-bar {
+  position: sticky;
+  bottom: 0;
+  background: var(--semi-color-bg-1);
+  border-top: 1px solid var(--semi-color-border);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  margin: 0 -24px -24px;
+}
+
+.kb-bottom-bar-left {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.kb-bottom-bar-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.kb-edit-loading-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 60px 0;
+}

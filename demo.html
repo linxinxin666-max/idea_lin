@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="referrer" content="no-referrer">
     <title>idea creator - 抖音生活服务素材神器</title>
     <style>
@@ -244,10 +247,10 @@
             display: none;
             align-self: flex-start;
             margin-top: 6px;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 800;
             color: #ffffff;
             background: linear-gradient(135deg, #f97316 0%, #ef4444 60%, #f59e0b 100%);
             box-shadow: 0 8px 18px rgba(239, 68, 68, 0.35);
@@ -288,6 +291,41 @@
             font-size: 12px;
             color: rgba(255, 255, 255, 0.6);
         }
+
+        .weather-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .weather-track-btn {
+            appearance: none;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.82);
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .weather-track-btn:hover {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+
+        .weather-track-btn:active {
+            transform: translateY(1px);
+        }
+
+        .weather-track-btn[aria-pressed="true"] {
+            border-color: rgba(34, 211, 238, 0.35);
+            background: rgba(34, 211, 238, 0.12);
+            color: rgba(255, 255, 255, 0.92);
+        }
         
         .weather-alert {
             margin-top: 10px;
@@ -323,6 +361,19 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 25% 10%, rgba(56, 189, 248, 0.16) 0%, rgba(56, 189, 248, 0) 55%),
+                        radial-gradient(circle at 85% 0%, rgba(244, 63, 94, 0.12) 0%, rgba(244, 63, 94, 0) 55%);
+            pointer-events: none;
         }
         
         .countdown-title {
@@ -333,6 +384,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            position: relative;
+            z-index: 1;
         }
         
         .countdown-item {
@@ -341,6 +394,8 @@
             align-items: center;
             padding: 12px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            z-index: 1;
         }
         
         .countdown-item:last-child {
@@ -367,6 +422,70 @@
         .countdown-unit {
             font-size: 12px;
             color: rgba(255, 255, 255, 0.6);
+        }
+
+        .countdown-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .countdown-meta-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.92);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .countdown-meta-sub {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 12px;
+        }
+
+        .countdown-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.78);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .countdown-value {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            background: rgba(245, 158, 11, 0.08);
+            flex-shrink: 0;
+        }
+
+        .countdown-value-num {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #fbbf24 0%, #fb7185 55%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .countdown-value-unit {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.72);
+            font-weight: 700;
         }
         
         /* 主内容区 */
@@ -740,6 +859,79 @@
         .preview-actions {
             display: flex;
             gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .bd-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .bd-search-input {
+            width: 240px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            color: #111827;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .bd-search-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .bd-search-btn {
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            color: #111827;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bd-search-btn:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+            transform: translateY(-2px);
+        }
+
+        .bd-search-clear-btn {
+            padding: 10px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bd-search-clear-btn:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+            transform: translateY(-2px);
+        }
+
+        .bd-search-stat {
+            font-size: 12px;
+            color: rgba(17, 24, 39, 0.6);
+            white-space: nowrap;
         }
         
         .regenerate-btn {
@@ -1170,10 +1362,10 @@
             <!-- 日期卡片 -->
             <div class="date-card">
                 <div class="date-main">
-                    <div class="date-number" id="dateNumber">28</div>
+                    <div class="date-number" id="dateNumber">--</div>
                     <div class="date-info">
-                        <div class="date-month-year" id="dateMonthYear">2026年4月</div>
-                        <div class="date-weekday" id="dateWeekday">星期二</div>
+                        <div class="date-month-year" id="dateMonthYear">----</div>
+                        <div class="date-weekday" id="dateWeekday">----</div>
                         <div class="bigday-badge" id="bigDayBadge">BIG DAY</div>
                     </div>
                 </div>
@@ -1182,10 +1374,13 @@
             <!-- 天气卡片 -->
             <div class="weather-card">
                 <div class="weather-header">
-                    <span class="weather-icon">☀️</span>
+                    <span class="weather-icon" id="weatherIcon">⛅️</span>
                     <div class="weather-details">
                         <div class="weather-text" id="weatherText">正在获取天气</div>
-                        <div class="weather-location" id="weatherLocation">定位中</div>
+                        <div class="weather-actions">
+                            <div class="weather-location" id="weatherLocation">定位中</div>
+                            <button class="weather-track-btn" id="weatherTrackBtn" type="button" aria-pressed="false">实时定位</button>
+                        </div>
                     </div>
                 </div>
                 <div class="weather-alert" id="weatherAlert"></div>
@@ -1198,14 +1393,29 @@
                 </div>
             </div>
             
-            <!-- 节假日倒计时 -->
-            <div class="countdown-card">
+            <!-- 倒计时 -->
+            <div class="countdown-card" id="bigdayCountdownCard">
+                <div class="countdown-title">
+                    <span>🎯</span>
+                    Bigday 倒计时
+                </div>
+                <div id="bigdayCountdownList"></div>
+            </div>
+
+            <div class="countdown-card" id="paydayCountdownCard">
+                <div class="countdown-title">
+                    <span>💰</span>
+                    工资发放倒计时
+                </div>
+                <div id="paydayCountdownList"></div>
+            </div>
+
+            <div class="countdown-card" id="holidayCountdownCard">
                 <div class="countdown-title">
                     <span>⏰</span>
                     节假日倒计时
                 </div>
-                <div id="countdownList">
-                </div>
+                <div id="holidayCountdownList"></div>
             </div>
             
             <div class="stats-card">
@@ -1318,6 +1528,12 @@
                                 📱 微信朋友圈预览
                             </div>
                             <div class="preview-actions">
+                                <div class="bd-search">
+                                    <input class="bd-search-input" id="bdSearchInput" placeholder="关键词搜索（空格分隔）" />
+                                    <button class="bd-search-btn" id="bdSearchBtn">🔎 搜索</button>
+                                    <button class="bd-search-clear-btn" id="bdSearchClearBtn">✖ 清除</button>
+                                    <span class="bd-search-stat" id="bdSearchStat"></span>
+                                </div>
                                 <button class="regenerate-btn" id="regenerateBtn">
                                     🔄 重新生成
                                 </button>
@@ -1377,14 +1593,129 @@
     </div>
     
     <script>
-        // 今天日期
-        const today = new Date(2026, 3, 28);
-        const holidayCalendar = [
-            { name: '五一劳动节', date: '2026-05-01', short: '五一' },
-            { name: '端午节', date: '2026-06-19', short: '端午' },
-            { name: '中秋节', date: '2026-10-06', short: '中秋' },
-            { name: '国庆节', date: '2026-10-01', short: '国庆' }
+        function getToday() {
+            return new Date();
+        }
+
+        function pad2(n) {
+            return String(n).padStart(2, '0');
+        }
+
+        function formatYmd(d) {
+            const x = d instanceof Date ? d : new Date();
+            return `${x.getFullYear()}-${pad2(x.getMonth() + 1)}-${pad2(x.getDate())}`;
+        }
+
+        function getDayStart(d) {
+            const x = d instanceof Date ? d : new Date();
+            return new Date(x.getFullYear(), x.getMonth(), x.getDate());
+        }
+
+        const BIGDAY_CALENDAR = [
+            { name: 'Bigday', date: '2026-05-20' }
         ];
+
+        const MOTIVATION_LIBRARY = [
+            '今天的你，比昨天更强一点点就够了。',
+            '把今天做好，明天自然会更顺。',
+            '别急着完美，先让事情发生。',
+            '你现在的努力，是在给未来铺路。',
+            '稳住节奏，持续输出，结果会来。',
+            '做正确的事，然后耐心等待。',
+            '把难事拆小，今天先推进一格。',
+            '别和情绪较劲，和目标做朋友。',
+            '你不是没时间，你是在给重要的事让路。',
+            '愿你忙而不乱，稳稳接住每一次机会。',
+            '今天也要记得：你已经很棒了。',
+            '小步快跑，持续迭代，终会到达。',
+            '别怕慢，只怕停。',
+            '能量低就先休息，回来再战。',
+            '把注意力放在可控的事情上。',
+            '坚持不是硬扛，是不放弃方向。',
+            '越是在低谷，越要把基本功做好。',
+            '先完成，再优化。',
+            '把“我必须”换成“我选择”，心态会更轻。',
+            '今天做的每一步，都在让你更自由。',
+            '把目标写下来，把行动做出来。',
+            '别等状态好，行动会带来状态。',
+            '你只需要比昨天前进一点点。',
+            '把该做的做完，心就会踏实。',
+            '你可以累，但别丢了信心。',
+            '慢慢来，会比较快。',
+            '把复杂留给系统，把简单留给自己。',
+            '今天的投入，会在某天开花。',
+            '别焦虑，先把手里的事做好。',
+            '把每一次执行，都当作在攒好运。',
+            '今天也要对自己温柔一点。',
+            '行动是最好的解药。',
+            '清晰比努力更重要，先想明白再做。',
+            '专注当下，胜过担心未来。',
+            '把难题交给时间，你只管持续。',
+            '今天再多做 1% 就赢了。',
+            '去做就对了，别让想法耗光勇气。',
+            '你走的每一步，都算数。',
+            '不求一步到位，但求步步到位。',
+            '今天也要保持专业：稳定、靠谱、有结果。'
+        ];
+
+        function getHolidayCalendarForYear(year) {
+            const base = [
+                { name: '五一劳动节', date: `${year}-05-01`, short: '五一' },
+                { name: '国庆节', date: `${year}-10-01`, short: '国庆' }
+            ];
+
+            if (year === 2026) {
+                return [
+                    { name: '五一劳动节', date: '2026-05-01', short: '五一' },
+                    { name: '端午节', date: '2026-06-19', short: '端午' },
+                    { name: '中秋节', date: '2026-10-06', short: '中秋' },
+                    { name: '国庆节', date: '2026-10-01', short: '国庆' }
+                ];
+            }
+            return base;
+        }
+
+        function isHoliday(dateObj) {
+            const d = dateObj instanceof Date ? dateObj : getToday();
+            const ymd = formatYmd(d);
+            return getHolidayCalendarForYear(d.getFullYear()).some(h => h.date === ymd);
+        }
+
+        function isHolidayEve(dateObj) {
+            const d = getDayStart(dateObj instanceof Date ? dateObj : getToday());
+            const t = new Date(d);
+            t.setDate(t.getDate() + 1);
+            return isHoliday(t);
+        }
+
+        function isBigDay(dateObj) {
+            const d = dateObj instanceof Date ? dateObj : getToday();
+            const ymd = formatYmd(d);
+            return BIGDAY_CALENDAR.some(b => b.date === ymd);
+        }
+
+        function getNextBigDay(baseDate) {
+            const now = baseDate instanceof Date ? baseDate : getToday();
+            const todayStart = getDayStart(now);
+            const candidates = BIGDAY_CALENDAR
+                .map(b => ({ ...b, d: new Date(b.date + 'T00:00:00') }))
+                .filter(b => !isNaN(b.d.getTime()))
+                .map(b => ({ ...b, diffDays: Math.ceil((b.d - todayStart) / (1000 * 60 * 60 * 24)) }))
+                .filter(b => b.diffDays >= 0)
+                .sort((a, b) => a.diffDays - b.diffDays);
+            return candidates[0] || null;
+        }
+
+        function getNextPayday(baseDate) {
+            const now = baseDate instanceof Date ? baseDate : getToday();
+            const todayStart = getDayStart(now);
+            const lastDayThisMonth = new Date(todayStart.getFullYear(), todayStart.getMonth() + 1, 0);
+            const payday = lastDayThisMonth.getTime() >= todayStart.getTime()
+                ? lastDayThisMonth
+                : new Date(todayStart.getFullYear(), todayStart.getMonth() + 2, 0);
+            const diffDays = Math.ceil((getDayStart(payday) - todayStart) / (1000 * 60 * 60 * 24));
+            return { date: formatYmd(payday), diffDays: Math.max(0, diffDays) };
+        }
         
         // 官方素材数据 - 从PDF整理的内容
         const allMaterials = [
@@ -1475,8 +1806,56 @@
             type: 'business',
             currentText: '',
             currentImage: '',
-            livePreferredUsed: false
+            livePreferredUsed: false,
+            searchKeyword: '',
+            searchPool: null
         };
+
+        function normalizeSearchTokens(input) {
+            const raw = String(input || '').trim();
+            if (!raw) return [];
+            return raw
+                .split(/[\s,，]+/g)
+                .map(s => s.trim())
+                .filter(Boolean)
+                .slice(0, 6);
+        }
+
+        function getTplText(tpl) {
+            if (typeof tpl === 'string') return tpl;
+            if (!tpl) return '';
+            return String(tpl.text || '');
+        }
+
+        function filterTemplatesByKeyword(templates, keyword) {
+            const tokens = normalizeSearchTokens(keyword);
+            if (!tokens.length) return templates;
+            const normalizedTokens = tokens.map(t => t.toLowerCase());
+            return templates.filter(tpl => {
+                const text = stripHashtagTags(getTplText(tpl)).toLowerCase();
+                return normalizedTokens.every(tok => text.includes(tok));
+            });
+        }
+
+        function setBDSearchStat(text) {
+            const el = document.getElementById('bdSearchStat');
+            if (!el) return;
+            el.textContent = text || '';
+        }
+
+        function applyBDSearch(keyword) {
+            bdState.searchKeyword = String(keyword || '').trim();
+            const templates = contentLibrary[bdState.persona]?.[bdState.type] || [];
+            if (!bdState.searchKeyword) {
+                bdState.searchPool = null;
+                setBDSearchStat('');
+                return;
+            }
+            const matched = filterTemplatesByKeyword(templates, bdState.searchKeyword);
+            bdState.searchPool = matched;
+            setBDSearchStat(`匹配 ${matched.length} 条`);
+            if (matched.length === 0) showToast('未找到匹配素材，换个关键词试试');
+        }
 
         function stripHashtagTags(text) {
             if (!text) return '';
@@ -1489,8 +1868,10 @@
             return t.trim();
         }
 
-        function getNextHoliday() {
-            const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        function getNextHoliday(baseDate) {
+            const now = baseDate instanceof Date ? baseDate : getToday();
+            const todayStart = getDayStart(now);
+            const holidayCalendar = getHolidayCalendarForYear(todayStart.getFullYear());
             const candidates = holidayCalendar
                 .map(h => ({ ...h, d: new Date(h.date + 'T00:00:00') }))
                 .filter(h => !isNaN(h.d.getTime()))
@@ -1585,7 +1966,7 @@
         }
 
         function extendHolidayLibrary() {
-            const h = getNextHoliday();
+            const h = getNextHoliday(getToday());
             if (!h) return;
             const pro = [];
             const fr = [];
@@ -1612,7 +1993,7 @@
         function isBeforeToday(liveTime) {
             const d = parseDateFromLiveTime(liveTime);
             if (!d) return false;
-            const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const todayStart = getDayStart(getToday());
             return d.getTime() < todayStart.getTime();
         }
 
@@ -1716,7 +2097,7 @@
         
         function incrementPublishStats() {
             const stats = getPublishStats();
-            const todayStr = today.toDateString();
+            const todayStr = getToday().toDateString();
             
             if (stats.lastDate !== todayStr) {
                 stats.today = 0;
@@ -1752,11 +2133,44 @@
             const priorityContainer = document.getElementById('priorityMaterials');
             const historyContainer = document.getElementById('historyMaterials');
             
-            // 只把今天（4.28）的内容放在优先发布，其余的在历史发布
-            const priorityMaterials = allMaterials.filter(m => m.date === "4.28");
-            const historyMaterials = allMaterials.filter(m => m.date !== "4.28");
-            
-            priorityContainer.innerHTML = priorityMaterials.map(material => createMaterialCard(material, 'priority')).join('');
+            const now = getToday();
+            const todayStart = getDayStart(now);
+            const todayLabel = `${now.getMonth() + 1}.${now.getDate()}`;
+            const parsed = allMaterials
+                .map(m => {
+                    const parts = String(m.date || '').split('.');
+                    const month = Number(parts[0]);
+                    const day = Number(parts[1]);
+                    if (!month || !day) return null;
+                    const d = new Date(todayStart.getFullYear(), month - 1, day);
+                    return { material: m, date: d };
+                })
+                .filter(Boolean);
+
+            const isFutureOrToday = (material) => {
+                const parts = String(material?.date || '').split('.');
+                const month = Number(parts[0]);
+                const day = Number(parts[1]);
+                if (!month || !day) return false;
+                const d = new Date(todayStart.getFullYear(), month - 1, day);
+                return d.getTime() >= todayStart.getTime();
+            };
+
+            const priorityMaterials = allMaterials.filter(isFutureOrToday);
+            const historyMaterials = allMaterials.filter(m => !isFutureOrToday(m));
+
+            if (priorityMaterials.length > 0) {
+                priorityContainer.innerHTML = priorityMaterials.map(material => createMaterialCard(material, 'priority')).join('');
+            } else {
+                const latest = parsed.sort((a, b) => b.date - a.date)[0]?.material?.date || '—';
+                priorityContainer.innerHTML = `<div class="material-card priority">
+                    <div class="material-header">
+                        <span class="material-date">${todayLabel}</span>
+                    </div>
+                    <div class="material-text">暂无今日及之后的官方素材（当前素材库最新为 ${latest}）</div>
+                </div>`;
+            }
+
             historyContainer.innerHTML = historyMaterials.map(material => createMaterialCard(material, 'history')).join('');
         }
         
@@ -1805,6 +2219,52 @@
             } catch (e) {
                 window.open(fallbackUrl, '_blank');
             }
+        }
+
+        const PUBLIC_VISITOR_ID_KEY = 'public_visitor_id_v1';
+
+        function getPublicVisitorId() {
+            try {
+                const existing = localStorage.getItem(PUBLIC_VISITOR_ID_KEY);
+                if (existing) return existing;
+                let id = '';
+                if (window.crypto && crypto.getRandomValues) {
+                    const bytes = new Uint8Array(16);
+                    crypto.getRandomValues(bytes);
+                    id = Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+                } else {
+                    id = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
+                }
+                localStorage.setItem(PUBLIC_VISITOR_ID_KEY, id);
+                return id;
+            } catch (e) {
+                return `${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
+            }
+        }
+
+        function sendPublicTrack(payload) {
+            const url = '/api/public/track';
+            try {
+                if (navigator.sendBeacon) {
+                    const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+                    navigator.sendBeacon(url, blob);
+                    return;
+                }
+            } catch (e) {}
+            try {
+                fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    keepalive: true
+                }).catch(() => {});
+            } catch (e) {}
+        }
+
+        function trackPublicEvent(event, extra) {
+            const visitorId = getPublicVisitorId();
+            const payload = { event, visitorId, ...(extra || {}) };
+            sendPublicTrack(payload);
         }
 
         function safeCopyText(text) {
@@ -1910,6 +2370,7 @@
             }
 
             safeCopyText(text).then(ok => {
+                trackPublicEvent('copy', { ok: Boolean(ok) });
                 if (ok) {
                     showToast('已复制到剪贴板，正在跳转企微…');
                 } else {
@@ -1964,17 +2425,25 @@
             if (!modal || !modal.classList.contains('show')) return;
             if (e.target === modal) hideImageModal();
         });
+
+        setTimeout(() => {
+            trackPublicEvent('open', { path: location.pathname });
+        }, 0);
         
         // BD选择器
         function initBDSelectors() {
             const personaCards = document.querySelectorAll('#personaGrid .select-card');
             const typeCards = document.querySelectorAll('#contentTypeGrid .select-card');
+            const searchInput = document.getElementById('bdSearchInput');
+            const searchBtn = document.getElementById('bdSearchBtn');
+            const searchClearBtn = document.getElementById('bdSearchClearBtn');
             
             personaCards.forEach(card => {
                 card.addEventListener('click', () => {
                     personaCards.forEach(c => c.classList.remove('selected'));
                     card.classList.add('selected');
                     bdState.persona = card.dataset.persona;
+                    applyBDSearch(searchInput ? searchInput.value : bdState.searchKeyword);
                     generateBDContent();
                 });
             });
@@ -1984,11 +2453,34 @@
                     typeCards.forEach(c => c.classList.remove('selected'));
                     card.classList.add('selected');
                     bdState.type = card.dataset.type;
+                    applyBDSearch(searchInput ? searchInput.value : bdState.searchKeyword);
                     generateBDContent();
                 });
             });
             
             document.getElementById('regenerateBtn').addEventListener('click', generateBDContent);
+            if (searchBtn) {
+                searchBtn.addEventListener('click', () => {
+                    applyBDSearch(searchInput ? searchInput.value : '');
+                    generateBDContent();
+                });
+            }
+            if (searchInput) {
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        applyBDSearch(searchInput.value);
+                        generateBDContent();
+                    }
+                });
+            }
+            if (searchClearBtn) {
+                searchClearBtn.addEventListener('click', () => {
+                    if (searchInput) searchInput.value = '';
+                    applyBDSearch('');
+                    generateBDContent();
+                });
+            }
             document.getElementById('bdDownloadBtn').addEventListener('click', () => {
                 if (bdState.currentImage) {
                     downloadOnly([bdState.currentImage]);
@@ -2008,9 +2500,9 @@
             const templates = contentLibrary[bdState.persona]?.[bdState.type];
             if (!templates || templates.length === 0) return;
             
-            let candidates = templates;
+            let candidates = Array.isArray(bdState.searchPool) ? bdState.searchPool : templates;
             if (bdState.type === 'live' && !bdState.livePreferredUsed) {
-                const appointment = templates.filter(t => {
+                const appointment = candidates.filter(t => {
                     const txt = typeof t === 'string' ? t : (t?.text || '');
                     return String(txt).includes('预约链接');
                 });
@@ -2018,6 +2510,10 @@
                     candidates = appointment;
                 }
                 bdState.livePreferredUsed = true;
+            }
+            if (!candidates || candidates.length === 0) {
+                showToast('当前筛选条件下没有可用素材');
+                return;
             }
             const randomIndex = Math.floor(Math.random() * candidates.length);
             const tpl = candidates[randomIndex];
@@ -2045,35 +2541,322 @@
             }
         }
         
-        // 初始化天气
-        function initWeather() {
-            document.getElementById('weatherText').textContent = '晴朗，25°C';
-            document.getElementById('weatherLocation').textContent = '北京';
+        function getWmoWeatherInfo(code) {
+            const c = Number(code);
+            if (c === 0) return { icon: '☀️', text: '晴' };
+            if (c === 1) return { icon: '🌤️', text: '多云' };
+            if (c === 2) return { icon: '⛅️', text: '多云' };
+            if (c === 3) return { icon: '☁️', text: '阴' };
+            if (c === 45 || c === 48) return { icon: '🌫️', text: '雾' };
+            if (c >= 51 && c <= 57) return { icon: '🌦️', text: '毛毛雨' };
+            if (c >= 61 && c <= 67) return { icon: '🌧️', text: '下雨' };
+            if (c >= 71 && c <= 77) return { icon: '🌨️', text: '下雪' };
+            if (c >= 80 && c <= 82) return { icon: '🌧️', text: '阵雨' };
+            if (c === 85 || c === 86) return { icon: '🌨️', text: '阵雪' };
+            if (c === 95) return { icon: '⛈️', text: '雷暴' };
+            if (c === 96 || c === 99) return { icon: '⛈️', text: '雷暴冰雹' };
+            return { icon: '🌡️', text: '天气' };
+        }
+
+        function formatCoords(latitude, longitude) {
+            const lat = Number(latitude);
+            const lon = Number(longitude);
+            if (isNaN(lat) || isNaN(lon)) return '';
+            return `${lat.toFixed(4)},${lon.toFixed(4)}`;
+        }
+
+        async function reverseGeocodeCity(latitude, longitude) {
+            try {
+                const lat = Number(latitude);
+                const lon = Number(longitude);
+                if (isNaN(lat) || isNaN(lon)) return '';
+                const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&zoom=10&addressdetails=1`;
+                const r = await fetch(url, { cache: 'no-store' });
+                if (!r.ok) return '';
+                const j = await r.json();
+                const a = j?.address || {};
+                const city = a.city || a.municipality || a.county || a.state || a.region || '';
+                const suburb = a.suburb || a.town || a.village || '';
+                const name = [city, suburb].filter(Boolean).join('·');
+                return String(name || '').trim();
+            } catch {
+                return '';
+            }
+        }
+
+        function setWeatherAlert(text) {
+            const el = document.getElementById('weatherAlert');
+            if (!el) return;
+            const t = (text || '').trim();
+            el.textContent = t;
+            el.style.display = t ? 'block' : 'none';
+        }
+
+        let _locationWatchId = null;
+        let _liveTrackingEnabled = false;
+        let _liveLocation = null;
+        let _lastWeatherFetchAt = 0;
+
+        function setTrackButtonState(enabled) {
+            const btn = document.getElementById('weatherTrackBtn');
+            if (!btn) return;
+            btn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+            btn.textContent = enabled ? '停止定位' : '实时定位';
+        }
+
+        function stopLocationWatch() {
+            if (_locationWatchId !== null && navigator.geolocation) {
+                try { navigator.geolocation.clearWatch(_locationWatchId); } catch {}
+            }
+            _locationWatchId = null;
+            _liveTrackingEnabled = false;
+            _liveLocation = null;
+            setTrackButtonState(false);
+        }
+
+        function startLocationWatch() {
+            if (!navigator.geolocation) {
+                setWeatherAlert('提示：浏览器不支持定位');
+                return;
+            }
+            _liveTrackingEnabled = true;
+            setTrackButtonState(true);
+            setWeatherAlert('');
+
+            const onPosition = (p) => {
+                const lat = p?.coords?.latitude;
+                const lon = p?.coords?.longitude;
+                if (typeof lat !== 'number' || typeof lon !== 'number') return;
+
+                _liveLocation = {
+                    latitude: lat,
+                    longitude: lon,
+                    label: formatCoords(lat, lon) || '当前位置',
+                    source: 'geo-watch'
+                };
+
+                const weatherLocationEl = document.getElementById('weatherLocation');
+                if (weatherLocationEl) weatherLocationEl.textContent = _liveLocation.label || '当前位置';
+
+                reverseGeocodeCity(lat, lon).then((name) => {
+                    if (!name || !_liveTrackingEnabled || !_liveLocation) return;
+                    _liveLocation = { ..._liveLocation, label: name, source: 'geo-watch' };
+                    const el = document.getElementById('weatherLocation');
+                    if (el) el.textContent = name;
+                });
+
+                const now = Date.now();
+                if (now - _lastWeatherFetchAt > 20 * 1000) {
+                    updateWeather({ force: true });
+                }
+            };
+
+            const onError = (err) => {
+                stopLocationWatch();
+                const code = err?.code;
+                if (code === 1) {
+                    setWeatherAlert('提示：定位权限被拒绝，无法实时追踪');
+                } else if (code === 2) {
+                    setWeatherAlert('提示：无法获取定位信号');
+                } else if (code === 3) {
+                    setWeatherAlert('提示：定位超时，可稍后重试');
+                } else {
+                    setWeatherAlert('提示：定位失败，可稍后重试');
+                }
+            };
+
+            try {
+                _locationWatchId = navigator.geolocation.watchPosition(
+                    onPosition,
+                    onError,
+                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+                );
+            } catch {
+                stopLocationWatch();
+                setWeatherAlert('提示：定位初始化失败');
+            }
+        }
+
+        async function resolveLocation() {
+            if (!navigator.geolocation) return null;
+            const geo = await new Promise(resolve => {
+                navigator.geolocation.getCurrentPosition(
+                    p => resolve({
+                        latitude: p.coords.latitude,
+                        longitude: p.coords.longitude,
+                        label: formatCoords(p.coords.latitude, p.coords.longitude) || '当前位置',
+                        source: 'geo-once'
+                    }),
+                    () => resolve(null),
+                    { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+                );
+            });
+            if (geo) {
+                const name = await reverseGeocodeCity(geo.latitude, geo.longitude);
+                if (name) return { ...geo, label: name };
+                return geo;
+            }
+
+            try {
+                const r = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
+                if (r.ok) {
+                    const j = await r.json();
+                    const lat = Number(j.latitude);
+                    const lon = Number(j.longitude);
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        const city = j.city || j.region || j.country_name || '';
+                        return { latitude: lat, longitude: lon, label: city, source: 'ip' };
+                    }
+                }
+            } catch {}
+
+            return null;
+        }
+
+        async function fetchWeatherForLocation(loc) {
+            const weatherTextEl = document.getElementById('weatherText');
+            const weatherLocationEl = document.getElementById('weatherLocation');
+            const weatherIconEl = document.getElementById('weatherIcon');
+
+            if (!loc) {
+                if (weatherTextEl) weatherTextEl.textContent = '无法获取天气';
+                if (weatherLocationEl) weatherLocationEl.textContent = '未定位';
+                setWeatherAlert('提示：浏览器定位/网络受限，可稍后重试');
+                return;
+            }
+
+            if (weatherLocationEl) weatherLocationEl.textContent = loc.label || '当前位置';
+            setWeatherAlert('');
+
+            try {
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(loc.latitude)}&longitude=${encodeURIComponent(loc.longitude)}&current=temperature_2m,weather_code&timezone=auto`;
+                const r = await fetch(url, { cache: 'no-store' });
+                if (!r.ok) throw new Error('weather_fetch_failed');
+                const j = await r.json();
+                const temp = j?.current?.temperature_2m;
+                const code = j?.current?.weather_code;
+                const info = getWmoWeatherInfo(code);
+                if (weatherIconEl) weatherIconEl.textContent = info.icon;
+                if (weatherTextEl) {
+                    const t = (temp === 0 || temp) ? `${Math.round(Number(temp))}°C` : '';
+                    weatherTextEl.textContent = t ? `${info.text}，${t}` : info.text;
+                }
+            } catch {
+                if (weatherTextEl) weatherTextEl.textContent = '天气获取失败';
+                setWeatherAlert('提示：网络异常，稍后会自动重试');
+            }
+        }
+
+        async function updateWeather(options = {}) {
+            const force = !!options.force;
+            const now = Date.now();
+            if (!force && now - _lastWeatherFetchAt < 15 * 1000) return;
+            _lastWeatherFetchAt = now;
+
+            const weatherTextEl = document.getElementById('weatherText');
+            const weatherLocationEl = document.getElementById('weatherLocation');
+            if (weatherTextEl) weatherTextEl.textContent = '正在获取天气';
+
+            if (_liveTrackingEnabled) {
+                if (_liveLocation) {
+                    if (weatherLocationEl) weatherLocationEl.textContent = _liveLocation.label || '当前位置';
+                    return fetchWeatherForLocation(_liveLocation);
+                }
+                if (weatherLocationEl) weatherLocationEl.textContent = '定位中';
+                return;
+            }
+
+            if (weatherLocationEl) weatherLocationEl.textContent = '定位中';
+            const loc = await resolveLocation();
+            return fetchWeatherForLocation(loc);
         }
 
         // 初始化倒计时
         function initCountdown() {
-            const countdownList = document.getElementById('countdownList');
-            const next = getNextHoliday();
-            if (!next) {
-                countdownList.innerHTML = `<div class="countdown-item">
-                    <span class="countdown-name">暂无节假日</span>
-                    <span class="countdown-days">
-                        <span class="countdown-number">-</span>
-                        <span class="countdown-unit">天</span>
-                    </span>
-                </div>`;
-                return;
+            const now = getToday();
+            const todayStart = getDayStart(now);
+            const nextBigDay = getNextBigDay(now);
+            const nextPayday = getNextPayday(now);
+            const nextHoliday = getNextHoliday(now);
+
+            function formatMd(ymd) {
+                const raw = String(ymd || '').trim();
+                const m = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+                if (!m) return raw;
+                const mm = String(Number(m[2]));
+                const dd = String(Number(m[3]));
+                return `${mm}.${dd}`;
             }
 
-            const diffDays = Math.max(0, next.diffDays ?? 0);
-            countdownList.innerHTML = `<div class="countdown-item">
-                <span class="countdown-name">${next.name}</span>
-                <span class="countdown-days">
-                    <span class="countdown-number">${diffDays}</span>
-                    <span class="countdown-unit">天</span>
-                </span>
-            </div>`;
+            function renderSingleCountdown(containerId, titleText, subText, diffDays) {
+                const el = document.getElementById(containerId);
+                if (!el) return;
+                const days = diffDays === null || diffDays === undefined ? '-' : Math.max(0, diffDays);
+                el.innerHTML = `<div class="countdown-item">
+                    <div class="countdown-meta">
+                        <div class="countdown-meta-title">${titleText}</div>
+                        ${subText ? `<div class="countdown-meta-sub"><span class="countdown-chip">${subText}</span></div>` : ''}
+                    </div>
+                    <div class="countdown-value">
+                        <span class="countdown-value-num">${days}</span>
+                        <span class="countdown-value-unit">天</span>
+                    </div>
+                </div>`;
+            }
+
+            if (nextBigDay) {
+                renderSingleCountdown('bigdayCountdownList', `目标日 ${formatMd(nextBigDay.date)}`, '', nextBigDay.diffDays);
+            } else {
+                renderSingleCountdown('bigdayCountdownList', '未录入', '告诉我日期我来录入', null);
+            }
+
+            renderSingleCountdown('paydayCountdownList', `发放日 ${formatMd(nextPayday.date)}`, '', nextPayday.diffDays);
+
+            if (nextHoliday) {
+                renderSingleCountdown('holidayCountdownList', nextHoliday.name, formatMd(nextHoliday.date), nextHoliday.diffDays);
+            } else {
+                renderSingleCountdown('holidayCountdownList', '暂无节假日', '', null);
+            }
+        }
+
+        function initMotivation() {
+            const el = document.getElementById('motivationText');
+            if (!el) return;
+            const now = getToday();
+            const seed = Number(`${now.getFullYear()}${pad2(now.getMonth() + 1)}${pad2(now.getDate())}`);
+            const text = seededPick(seed, MOTIVATION_LIBRARY);
+            if (text) el.textContent = text;
+        }
+
+        function initDateCard() {
+            const now = getToday();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const weekdayMap = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const weekday = weekdayMap[now.getDay()] || '';
+
+            const dateNumberEl = document.getElementById('dateNumber');
+            const dateMonthYearEl = document.getElementById('dateMonthYear');
+            const dateWeekdayEl = document.getElementById('dateWeekday');
+            const bigDayBadgeEl = document.getElementById('bigDayBadge');
+
+            if (dateNumberEl) dateNumberEl.textContent = String(day);
+            if (dateMonthYearEl) dateMonthYearEl.textContent = `${year}年${month}月`;
+            if (dateWeekdayEl) dateWeekdayEl.textContent = weekday;
+
+            const big = isBigDay(now);
+            if (bigDayBadgeEl) bigDayBadgeEl.style.display = big ? 'inline-flex' : 'none';
+        }
+
+        let _holidayLibKey = null;
+        function extendHolidayLibraryOncePerHoliday() {
+            const h = getNextHoliday(getToday());
+            if (!h) return;
+            const k = `${h.name}|${h.date}`;
+            if (_holidayLibKey === k) return;
+            _holidayLibKey = k;
+            extendHolidayLibrary();
         }
 
         // 初始化 - 添加更好的错误处理
@@ -2082,7 +2865,7 @@
                 const closeBtn = document.getElementById('imageModalClose');
                 if (closeBtn) closeBtn.addEventListener('click', hideImageModal);
                 
-                extendHolidayLibrary();
+                extendHolidayLibraryOncePerHoliday();
                 renderMaterials();
                 
                 // 尝试加载JSON，但即使失败也继续初始化
@@ -2092,14 +2875,52 @@
                 ]).finally(() => {
                     initBDSelectors();
                     updateStatsDisplay();
-                    initWeather();
+                    initMotivation();
+                    initDateCard();
+                    updateWeather();
                     initCountdown();
+
+                    setTrackButtonState(false);
+                    const trackBtn = document.getElementById('weatherTrackBtn');
+                    if (trackBtn) {
+                        trackBtn.addEventListener('click', () => {
+                            if (_liveTrackingEnabled) {
+                                stopLocationWatch();
+                                updateWeather({ force: true });
+                            } else {
+                                startLocationWatch();
+                            }
+                        });
+                    }
+                    document.addEventListener('visibilitychange', () => {
+                        if (document.hidden && _liveTrackingEnabled) stopLocationWatch();
+                    });
+
+                    let lastDayKey = getDayStart(getToday()).toDateString();
+                    setInterval(() => {
+                        initDateCard();
+                        const dayKey = getDayStart(getToday()).toDateString();
+                        if (dayKey !== lastDayKey) {
+                            lastDayKey = dayKey;
+                            extendHolidayLibraryOncePerHoliday();
+                            renderMaterials();
+                            initMotivation();
+                            initCountdown();
+                            updateStatsDisplay();
+                        }
+                    }, 60 * 1000);
+
+                    setInterval(() => {
+                        updateWeather();
+                    }, 30 * 60 * 1000);
                 });
             } catch (e) {
                 console.error('初始化时发生错误:', e);
                 // 即使出错也尝试基本渲染
                 try { renderMaterials(); } catch {}
-                try { initWeather(); } catch {}
+                try { initMotivation(); } catch {}
+                try { initDateCard(); } catch {}
+                try { updateWeather(); } catch {}
                 try { initCountdown(); } catch {}
             }
         });

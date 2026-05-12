@@ -1,0 +1,21 @@
+.main-layout {
+  min-width: 1280px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--semi-color-bg-0);
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.content-area {
+  flex: 1;
+  min-width: 1020px;
+  padding: 24px;
+  overflow-y: auto;
+  background: var(--semi-color-bg-0);
+}

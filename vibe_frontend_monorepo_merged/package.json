@@ -1,0 +1,16 @@
+{
+  "name": "vibe-frontend-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "cd apps/web && npm run dev",
+    "build": "cd apps/web && npm run build",
+    "preview": "cd apps/web && npm run preview"
+  },
+  "engines": {
+    "node": ">=16.13.0"
+  }
+}

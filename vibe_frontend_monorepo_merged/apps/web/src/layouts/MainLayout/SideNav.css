@@ -1,0 +1,100 @@
+.side-nav {
+  width: 220px;
+  height: 100%;
+  background: var(--semi-color-bg-2); /* 使用比内容区更深一点的灰色 */
+  border-right: 1px solid var(--semi-color-border);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.2s ease;
+  flex-shrink: 0;
+}
+
+.side-nav.collapsed {
+  width: 72px;
+}
+
+.nav-menu {
+  flex: 1;
+  padding: 24px 12px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--semi-color-text-2);
+}
+
+.nav-item:hover {
+  background: var(--semi-color-fill-1);
+  color: var(--semi-color-text-0);
+}
+
+.nav-item.active {
+  background: var(--semi-color-bg-1);
+  color: var(--semi-color-primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+}
+
+.nav-text {
+  margin-left: 12px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.side-nav.collapsed .nav-item {
+  justify-content: center;
+  padding: 0;
+}
+
+.nav-bottom {
+  padding: 8px;
+}
+
+.nav-divider {
+  height: 1px;
+  background: var(--semi-color-border);
+  margin: 8px 0;
+}
+
+.mock-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+}
+
+.mock-label {
+  font-size: 13px;
+  color: var(--semi-color-text-2);
+}
+
+.version {
+  font-size: 12px;
+  color: var(--semi-color-text-3);
+  text-align: center;
+  padding: 8px 0;
+}
+
+.side-nav.collapsed .mock-switch {
+  justify-content: center;
+  padding: 8px;
+}
+
+.side-nav.collapsed .nav-bottom {
+  padding: 8px;
+}

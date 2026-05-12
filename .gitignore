@@ -24,3 +24,16 @@ dist-ssr
 *.sw?
 .vercel
 .env*.local
+
+.iga/
+.iga-home/
+
+# Local tooling / caches
+.agents/
+.tmp_skill_install/
+.vercel_home/
+
+# Local runtime artifacts / data (may contain webhook URLs)
+server.lock.json
+subscriptions.json
+public_analytics.json

@@ -3,9 +3,55 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 3000;
+const PORT = Number(process.env.PORT || 3000);
 const PUBLIC_BASE_URL = (process.env.PUBLIC_BASE_URL || `http://localhost:${PORT}`).replace(/\/+$/, '');
+const PUBLIC_DEMO_URL_FILE = path.join(__dirname, 'public_demo_url.txt');
 const DATA_FILE = path.join(__dirname, 'subscriptions.json');
+const LOCK_FILE = path.join(__dirname, 'reminder-server.lock.json');
+const TIME_ZONE = process.env.TIME_ZONE || 'Asia/Shanghai';
+
+function tryAcquireLock() {
+  if (fs.existsSync(LOCK_FILE)) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(LOCK_FILE, 'utf8'));
+      if (prev && prev.pid) {
+        try {
+          process.kill(prev.pid, 0);
+          throw new Error(`提醒服务已在运行(pid=${prev.pid})，请先停止旧进程或更换端口`);
+        } catch (e) {
+          if (e && e.message && e.message.includes('提醒服务已在运行')) throw e;
+        }
+      }
+    } catch (e) {
+      if (e && e.message && e.message.includes('提醒服务已在运行')) throw e;
+    }
+  }
+  fs.writeFileSync(LOCK_FILE, JSON.stringify({ pid: process.pid, port: PORT, startedAt: new Date().toISOString() }, null, 2));
+  const cleanup = () => {
+    try {
+      const cur = JSON.parse(fs.readFileSync(LOCK_FILE, 'utf8'));
+      if (cur && cur.pid === process.pid) fs.unlinkSync(LOCK_FILE);
+    } catch (e) {}
+  };
+  process.on('exit', cleanup);
+  process.on('SIGINT', () => process.exit(0));
+  process.on('SIGTERM', () => process.exit(0));
+}
+
+function dateKey(date) {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+}
+
+function buildDemoUrl(query = '') {
+  let configured = '';
+  try {
+    configured = fs.readFileSync(PUBLIC_DEMO_URL_FILE, 'utf8').trim();
+  } catch (e) {}
+  const envUrl = (process.env.PUBLIC_DEMO_URL || '').trim();
+  const base = (configured || envUrl).replace(/\/+$/, '') || `${PUBLIC_BASE_URL}/demo.html`;
+  if (!query) return base;
+  return `${base}${query.startsWith('?') ? query : `?${query}`}`;
+}
 
 function loadSubscriptions() {
   if (fs.existsSync(DATA_FILE)) {
@@ -27,7 +73,27 @@ function isWorkDay(date) {
   return day !== 0 && day !== 6;
 }
 
+function nextWorkdayNoon(fromDate) {
+  const d = new Date(fromDate);
+  d.setHours(12, 0, 0, 0);
+  if (isWorkDay(d) && d > fromDate) {
+    return d;
+  }
+  const next = new Date(fromDate);
+  next.setHours(12, 0, 0, 0);
+  do {
+    next.setDate(next.getDate() + 1);
+  } while (!isWorkDay(next));
+  return next;
+}
+
 function calculateNextReminder(frequencyDays, lastReminder = null) {
+  const now = new Date();
+  const todayNoon = new Date(now);
+  todayNoon.setHours(12, 0, 0, 0);
+  if (!lastReminder && (todayNoon > now) && isWorkDay(now)) {
+    return todayNoon;
+  }
   let startDate = lastReminder ? new Date(lastReminder) : new Date();
   let nextDate = new Date(startDate);
   
@@ -39,6 +105,7 @@ function calculateNextReminder(frequencyDays, lastReminder = null) {
     }
   }
   
+  nextDate.setHours(12, 0, 0, 0);
   return nextDate;
 }
 
@@ -96,7 +163,7 @@ async function sendFeishuReminder(webhook, subscription) {
         {
           tag: 'div',
           text: {
-            content: `**⏰ 提醒时间到啦！**\n\n您设置的是 ${freqLabel[subscription.frequency]} 发布一次朋友圈。\n\n今天为您准备了精选素材，赶紧看看吧！`,
+            content: `**⏰ 提醒时间到啦！**\n\n您设置的是 ${freqLabel[subscription.frequency]} 发布一次朋友圈。\n\n🔗 工具入口：${buildDemoUrl()}\n\n今天为您准备了精选素材，赶紧看看吧！`,
             tag: 'lark_md'
           }
         },
@@ -117,7 +184,7 @@ async function sendFeishuReminder(webhook, subscription) {
               tag: 'button',
               text: { tag: 'plain_text', content: '直接打开官方推荐文案' },
               type: 'primary',
-              url: `${PUBLIC_BASE_URL}/demo.html?officialId=latest-1&persona=professional&contentType=official`
+              url: buildDemoUrl('?officialId=latest-1&persona=professional&contentType=official')
             }
           ]
         },
@@ -134,18 +201,18 @@ async function sendFeishuReminder(webhook, subscription) {
         {
           tag: 'action',
           actions: [
-            { tag: 'button', text: { tag: 'plain_text', content: '专业顾问' }, type: 'default', url: `${PUBLIC_BASE_URL}/demo.html?persona=professional&contentType=official` },
-            { tag: 'button', text: { tag: 'plain_text', content: '亲切伙伴' }, type: 'default', url: `${PUBLIC_BASE_URL}/demo.html?persona=friendly&contentType=official` },
-            { tag: 'button', text: { tag: 'plain_text', content: '行业专家' }, type: 'default', url: `${PUBLIC_BASE_URL}/demo.html?persona=expert&contentType=official` },
-            { tag: 'button', text: { tag: 'plain_text', content: '活力满满' }, type: 'default', url: `${PUBLIC_BASE_URL}/demo.html?persona=cheerful&contentType=official` }
+            { tag: 'button', text: { tag: 'plain_text', content: '专业顾问' }, type: 'default', url: buildDemoUrl('?persona=professional&contentType=official') },
+            { tag: 'button', text: { tag: 'plain_text', content: '亲切伙伴' }, type: 'default', url: buildDemoUrl('?persona=friendly&contentType=official') },
+            { tag: 'button', text: { tag: 'plain_text', content: '行业专家' }, type: 'default', url: buildDemoUrl('?persona=expert&contentType=official') },
+            { tag: 'button', text: { tag: 'plain_text', content: '活力满满' }, type: 'default', url: buildDemoUrl('?persona=cheerful&contentType=official') }
           ]
         },
         {
           tag: 'action',
           actions: [
-            { tag: 'button', text: { tag: 'plain_text', content: '官方发布' }, type: 'default', url: `${PUBLIC_BASE_URL}/demo.html?persona=professional&contentType=official` },
-            { tag: 'button', text: { tag: 'plain_text', content: '经营技巧' }, type: 'default', url: `${PUBLIC_BASE_URL}/demo.html?persona=professional&contentType=tip` },
-            { tag: 'button', text: { tag: 'plain_text', content: '成功案例' }, type: 'default', url: `${PUBLIC_BASE_URL}/demo.html?persona=professional&contentType=success` }
+            { tag: 'button', text: { tag: 'plain_text', content: '官方发布' }, type: 'default', url: buildDemoUrl('?persona=professional&contentType=official') },
+            { tag: 'button', text: { tag: 'plain_text', content: '经营技巧' }, type: 'default', url: buildDemoUrl('?persona=professional&contentType=tip') },
+            { tag: 'button', text: { tag: 'plain_text', content: '成功案例' }, type: 'default', url: buildDemoUrl('?persona=professional&contentType=success') }
           ]
         },
         {
@@ -165,7 +232,7 @@ async function sendFeishuReminder(webhook, subscription) {
               tag: 'button',
               text: { tag: 'plain_text', content: '打开 Idea Creator 主页' },
               type: 'primary',
-              url: `${PUBLIC_BASE_URL}/demo.html`
+              url: buildDemoUrl()
             }
           ]
         }
@@ -216,7 +283,12 @@ function checkAndSendReminders() {
     } else {
       const nextReminder = new Date(sub.nextReminder);
       
-      if (now >= nextReminder && isWorkDay(now)) {
+      if (now >= nextReminder && isWorkDay(now) && now.getHours() >= 12) {
+        const last = new Date(sub.lastReminder);
+        if (!Number.isNaN(last.getTime()) && dateKey(last) === dateKey(now)) {
+          sub.nextReminder = nextWorkdayNoon(now).toISOString();
+          return;
+        }
         console.log(`发送提醒给: ${sub.webhook.substring(0, 30)}...`);
         
         sendFeishuReminder(sub.webhook, sub)
@@ -229,6 +301,8 @@ function checkAndSendReminders() {
           .catch((error) => {
             console.error('发送提醒失败:', error);
           });
+      } else if (now >= nextReminder) {
+        sub.nextReminder = nextWorkdayNoon(now).toISOString();
       }
     }
   });
@@ -289,6 +363,8 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify({ success: false, error: 'Not found' }));
   }
 });
+
+tryAcquireLock();
 
 server.listen(PORT, () => {
   console.log(`提醒服务已启动: http://localhost:${PORT}`);

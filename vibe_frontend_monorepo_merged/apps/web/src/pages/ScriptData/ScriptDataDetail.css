@@ -1,0 +1,70 @@
+.script-data-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Match ScriptCard border/radius on all Semi Cards in this page */
+.script-data-detail .semi-card {
+  border-radius: 12px !important;
+  border: 1px solid var(--semi-color-border) !important;
+}
+
+.data-detail-loading,
+.data-detail-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--semi-color-text-0);
+  margin: 0;
+}
+
+.time-filter {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.intent-distribution {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.intent-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

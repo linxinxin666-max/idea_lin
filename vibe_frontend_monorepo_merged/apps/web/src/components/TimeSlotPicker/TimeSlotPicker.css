@@ -1,0 +1,41 @@
+.tsp-wrap {
+  user-select: none;
+}
+
+.tsp-labels {
+  position: relative;
+  height: 18px;
+  margin-bottom: 2px;
+}
+
+.tsp-label {
+  position: absolute;
+  font-size: 11px;
+  color: var(--semi-color-text-2);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.tsp-grid {
+  display: flex;
+  gap: 1px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--semi-color-border);
+}
+
+.tsp-cell {
+  flex: 1;
+  height: 28px;
+  background: var(--semi-color-fill-0);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.tsp-cell:hover:not(.selected) {
+  background: var(--semi-color-primary-light-hover);
+}
+
+.tsp-cell.selected {
+  background: var(--semi-color-primary);
+}

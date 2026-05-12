@@ -1,0 +1,108 @@
+.step-role-config {
+  max-width: 600px;
+}
+
+.step-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--semi-color-text-0);
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--semi-color-text-2);
+  margin-bottom: 32px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--semi-color-text-0);
+}
+
+.form-label .required {
+  color: var(--semi-color-danger);
+  margin-left: 4px;
+}
+
+.radio-card-group-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radio-card-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.radio-card {
+  padding: 9px 20px;
+  border: 2px solid var(--semi-color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  position: relative;
+  min-width: 90px;
+}
+
+.radio-card:hover {
+  border-color: var(--semi-color-primary-light-hover);
+  background: var(--semi-color-primary-light-default);
+}
+
+.radio-card.selected {
+  border-color: var(--semi-color-primary);
+  background: var(--semi-color-primary-light-default);
+}
+
+.radio-card-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--semi-color-text-0);
+}
+
+.radio-card-check {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 18px;
+  height: 18px;
+  background: var(--semi-color-primary);
+  border-radius: 0 6px 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+}
+
+.radio-card-desc {
+  font-size: 13px;
+  color: var(--semi-color-text-2);
+  line-height: 1.5;
+}
+
+.step-actions {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

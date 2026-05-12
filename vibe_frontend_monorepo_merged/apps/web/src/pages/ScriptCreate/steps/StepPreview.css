@@ -1,0 +1,238 @@
+.step-preview {
+  max-width: 720px;
+}
+
+.step-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--semi-color-text-0);
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--semi-color-text-2);
+  margin-bottom: 28px;
+}
+
+/* ---- sections ---- */
+.preview-body {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--semi-color-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.preview-section-block {
+  border-bottom: 1px solid var(--semi-color-border);
+}
+
+.preview-section-block:last-child {
+  border-bottom: none;
+}
+
+.preview-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--semi-color-text-2);
+  background: var(--semi-color-fill-0);
+  padding: 8px 20px;
+  border-bottom: 1px solid var(--semi-color-border);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.preview-section-body {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---- two-col grid ---- */
+.preview-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+}
+
+/* ---- rows ---- */
+.preview-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-height: 22px;
+}
+
+.preview-row-col {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.preview-row-label {
+  font-size: 13px;
+  color: var(--semi-color-text-2);
+  white-space: nowrap;
+  min-width: 72px;
+  flex-shrink: 0;
+}
+
+.preview-row-value {
+  font-size: 14px;
+  color: var(--semi-color-text-0);
+  line-height: 1.5;
+}
+
+.preview-text-wrap {
+  font-size: 14px;
+  color: var(--semi-color-text-0);
+  line-height: 1.6;
+  word-break: break-all;
+}
+
+.empty-val {
+  font-size: 13px;
+  color: var(--semi-color-danger);
+}
+
+/* ---- dialog cards ---- */
+.preview-dialogs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.preview-dialog-card {
+  background: var(--semi-color-fill-0);
+  border: 1px solid var(--semi-color-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.preview-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.preview-dialog-index {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--semi-color-text-0);
+}
+
+.preview-dialog-content {
+  font-size: 14px;
+  color: var(--semi-color-text-1);
+  line-height: 1.6;
+  margin: 0 0 8px 0;
+}
+
+.preview-parse-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--semi-color-border);
+}
+
+.preview-parse-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.preview-parse-q {
+  font-size: 12px;
+  color: var(--semi-color-text-2);
+}
+
+.preview-parse-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+
+/* ── Dialog DAG preview nodes ───────────────────────────────────────────── */
+
+.dag-pv-node {
+  background: #fff;
+  border: 1px solid var(--semi-color-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.dag-pv-node--opening {
+  border-top: 3px solid #722ed1;
+}
+
+.dag-pv-node--closing {
+  border-top: 3px solid #13c2c2;
+}
+
+.dag-pv-node--dialog {
+  border-top: 3px solid #1890ff;
+}
+
+.dag-pv-node--skill {
+  border-top: 3px solid #52c41a;
+}
+
+.dag-pv-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.dag-pv-badge--opening { background: #f9f0ff; color: #722ed1; }
+.dag-pv-badge--closing { background: #e6fffb; color: #08979c; }
+.dag-pv-badge--skill   { background: #f6ffed; color: #389e0d; }
+
+.dag-pv-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.dag-pv-seq {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--semi-color-text-0);
+}
+
+.dag-pv-type-tag {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.dag-pv-text {
+  font-size: 12px;
+  color: var(--semi-color-text-1);
+  line-height: 1.5;
+  margin: 0;
+  word-break: break-all;
+}
+
+.dag-pv-text--empty {
+  color: var(--semi-color-danger);
+  font-style: italic;
+}
+
+.dag-pv-parse-hint {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--semi-color-text-2);
+}

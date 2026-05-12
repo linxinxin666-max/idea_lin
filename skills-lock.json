@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "iga-pages": {
+      "source": "volc-iga-pages/iga-pages-skills",
+      "sourceType": "github",
+      "skillPath": "skills/iga-pages/SKILL.md",
+      "computedHash": "c25fed79951c67d0c877d1f5fe48afd18b3ee95f6365ce34ed2e5d41ea094b66"
+    },
+    "vibe-frontend-deploy": {
+      "source": "784275918-debug/vibe-frontend-deploy-skill",
+      "sourceType": "github",
+      "skillPath": "vibe-frontend-deploy/SKILL.md",
+      "computedHash": "96bc58a5b6d1e62ba4bdb4032891160728736e2f882da0ef60ea1d1b6810e512"
+    }
+  }
+}

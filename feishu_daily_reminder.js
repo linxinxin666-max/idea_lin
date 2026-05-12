@@ -1,5 +1,18 @@
 const https = require('https');
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
+
+const PUBLIC_DEMO_URL_FILE = path.join(__dirname, 'public_demo_url.txt');
+
+function readConfiguredDemoUrl() {
+  try {
+    const v = fs.readFileSync(PUBLIC_DEMO_URL_FILE, 'utf8').trim();
+    return v ? v.replace(/\/+$/, '') : '';
+  } catch (e) {
+    return '';
+  }
+}
 
 function requiredEnv(name) {
   const v = (process.env[name] || '').trim();
@@ -49,12 +62,13 @@ function postJson(webhook, payload) {
   });
 }
 
-function buildCardMessage({ publicBaseUrl }) {
-  const baseUrl = (publicBaseUrl || '').replace(/\/+$/, '');
-  const demoUrl = baseUrl ? `${baseUrl}/demo.html` : '';
+function buildCardMessage({ publicBaseUrl, publicDemoUrl }) {
+  const fileUrl = readConfiguredDemoUrl();
+  const demoUrl = (publicDemoUrl || '').trim().replace(/\/+$/, '') || fileUrl || ((publicBaseUrl || '').replace(/\/+$/, '') ? `${(publicBaseUrl || '').replace(/\/+$/, '')}/demo.html` : '');
   const title = '📱 朋友圈发布提醒';
   const now = new Date();
   const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const linkLine = demoUrl ? `\n\n🔗 工具入口：${demoUrl}` : '';
 
   const elements = [
     {
@@ -65,6 +79,9 @@ function buildCardMessage({ publicBaseUrl }) {
       }
     }
   ];
+  if (demoUrl) {
+    elements[0].text.content = elements[0].text.content.replace(/,\s*$/, '') + linkLine;
+  }
 
   if (demoUrl) {
     elements.push({ tag: 'hr' });
@@ -73,7 +90,7 @@ function buildCardMessage({ publicBaseUrl }) {
       actions: [
         {
           tag: 'button',
-          text: { tag: 'plain_text', content: '打开素材工具（经营技巧）' },
+          text: { tag: 'plain_text', content: '打开素材工具' },
           type: 'primary',
           url: `${demoUrl}`
         }
@@ -96,8 +113,9 @@ async function main() {
   const webhook = dryRun ? optionalEnv('FEISHU_WEBHOOK', 'https://open.feishu.cn/open-apis/bot/v2/hook/xxx') : requiredEnv('FEISHU_WEBHOOK');
   const secret = optionalEnv('FEISHU_SECRET', '');
   const publicBaseUrl = optionalEnv('PUBLIC_BASE_URL', '');
+  const publicDemoUrl = optionalEnv('PUBLIC_DEMO_URL', '');
 
-  const message = buildCardMessage({ publicBaseUrl });
+  const message = buildCardMessage({ publicBaseUrl, publicDemoUrl });
 
   let payload = { ...message };
   if (secret) {

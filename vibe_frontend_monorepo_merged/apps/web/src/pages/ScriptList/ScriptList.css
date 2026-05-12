@@ -1,0 +1,71 @@
+.script-list {
+  height: 100%;
+  padding: 28px 32px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── header ──────────────────────────────── */
+.list-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--semi-color-text-0);
+  margin: 0;
+}
+
+.page-count {
+  font-size: 13px;
+  color: var(--semi-color-text-2);
+  background: var(--semi-color-fill-1);
+  padding: 1px 8px;
+  border-radius: 10px;
+}
+
+/* ── toolbar ─────────────────────────────── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.toolbar-right {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+/* ── content ─────────────────────────────── */
+.list-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── pagination ──────────────────────────── */
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 12px 0;
+}
