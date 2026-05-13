@@ -461,6 +461,16 @@
             white-space: nowrap;
         }
 
+        .countdown-chip-date {
+            padding: 6px 14px;
+            border-color: rgba(251, 191, 36, 0.6);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.22) 0%, rgba(251, 113, 133, 0.16) 55%, rgba(96, 165, 250, 0.14) 100%);
+            color: rgba(255, 255, 255, 0.96);
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: 0.2px;
+        }
+
         .countdown-value {
             display: inline-flex;
             align-items: baseline;
@@ -1444,42 +1454,16 @@
         <main class="main-content">
             <!-- Tab切换 -->
             <div class="tabs-container">
-                <button class="tab-btn active" onclick="switchTab('official')">
-                    📢 官方发布专区
-                </button>
-                <button class="tab-btn" onclick="switchTab('custom')">
+                <button class="tab-btn active" onclick="switchTab('custom')">
                     ✨ 自定义发布专区
                 </button>
-            </div>
-            
-            <!-- 官方发布专区内容 -->
-            <div id="official-tab" class="tab-content active">
-                <!-- 优先发布版块 -->
-                <div class="priority-section">
-                    <div class="priority-header">
-                        <span class="priority-icon">⭐</span>
-                        <h2 class="priority-title">优先发布</h2>
-                        <span class="priority-badge">今日及之后</span>
-                    </div>
-                    <div class="materials-grid" id="priorityMaterials">
-                    </div>
-                </div>
-                
-                <!-- 历史发布版块 -->
-                <div class="history-section">
-                    <div class="history-header">
-                        <span class="history-icon">📜</span>
-                        <h2 class="history-title">历史发布</h2>
-                    </div>
-                    <div class="history-scroll-container">
-                        <div class="history-materials-horizontal" id="historyMaterials">
-                        </div>
-                    </div>
-                </div>
+                <button class="tab-btn" onclick="switchTab('official')">
+                    📢 官方发布专区
+                </button>
             </div>
             
             <!-- 自定义发布专区内容 -->
-            <div id="custom-tab" class="tab-content">
+            <div id="custom-tab" class="tab-content active">
                 <div class="bd-section">
                     <div class="bd-grid">
                         <div class="selector-group">
@@ -1516,6 +1500,14 @@
                                 <div class="select-card" data-type="live">
                                     <span class="select-icon">🎥</span>
                                     <span class="select-name">直播动态</span>
+                                </div>
+                                <div class="select-card" data-type="product">
+                                    <span class="select-icon">🧰</span>
+                                    <span class="select-name">产品介绍</span>
+                                </div>
+                                <div class="select-card" data-type="rule">
+                                    <span class="select-icon">📌</span>
+                                    <span class="select-name">规则中心</span>
                                 </div>
                             </div>
                         </div>
@@ -1570,6 +1562,32 @@
                                 </div>
                                 <div class="moments-action-btn">···</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 官方发布专区内容 -->
+            <div id="official-tab" class="tab-content">
+                <!-- 优先发布版块 -->
+                <div class="priority-section">
+                    <div class="priority-header">
+                        <span class="priority-icon">⭐</span>
+                        <h2 class="priority-title">优先发布</h2>
+                        <span class="priority-badge">今日及之后</span>
+                    </div>
+                    <div class="materials-grid" id="priorityMaterials">
+                    </div>
+                </div>
+                
+                <!-- 历史发布版块 -->
+                <div class="history-section">
+                    <div class="history-header">
+                        <span class="history-icon">📜</span>
+                        <h2 class="history-title">历史发布</h2>
+                    </div>
+                    <div class="history-scroll-container">
+                        <div class="history-materials-horizontal" id="historyMaterials">
                         </div>
                     </div>
                 </div>
@@ -1778,7 +1796,30 @@
                     "🎥【直播推荐】\n《节点冲高-商家直播进阶课》-西餐异国菜\n\n👥 850 人已观看，高质量课程不容错过！\n\n💡 推荐理由：\n• 专业导师讲解，内容干货满满\n• 实战案例丰富，可直接落地使用\n• 助力商家提升运营能力\n\n点击链接马上学习！\n\n#抖音生活服务 #直播学习 #商家成长\n\n🔗 观看链接：https://lifexue.com/live/list",
                     "🎥【直播推荐】\n码上有生意—初级扫码实操课\n\n👥 10299 人已观看，高质量课程不容错过！\n\n💡 推荐理由：\n• 专业导师讲解，内容干货满满\n• 实战案例丰富，可直接落地使用\n• 助力商家提升运营能力\n\n点击链接马上学习！\n\n#抖音生活服务 #直播学习 #商家成长\n\n🔗 观看链接：https://lifexue.com/live/list",
                     "📺【精品直播课】\n流量破局 商家特训课\n\n👀 4956 人都在看的好课！\n\n✨ 课程亮点：\n• 系统梳理运营知识体系\n• 提供实用工具和方法论\n• 帮助商家快速突破瓶颈\n\n不要错过学习机会！\n\n#抖音生活服务 #精品课程 #能力提升\n\n🔗 学习链接：https://lifexue.com/live/list"
-                ]
+                ],
+                product: [
+                    { text: "🧰【出单宝｜产品介绍】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝是抖音生活服务推出的智能托管产品。\n商家只需设定一笔托管服务费率，系统会自动整合发券补贴、流量获取、达人带货等动作，目标是优化核销金额。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜计费口径】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝按“核销后订单”收费：先核销再计费，不核销不产生费用。\n开启出单宝后，原平台软件服务费（原平台佣金）不再单独收取，成本口径更清晰。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜适用商家】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝适用范围建议先对齐：目前主要对餐饮、综合商家开放；酒旅商家在规划中。\n经营模式暂不支持商商联营/平行经营/共管经营；商品类型仅支持团购品与代金券。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜生效范围】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝作用于全店所有核销订单，统一生效托管服务费。\n流量渠道为全渠道覆盖（如POI货架、直播货架、搜索、商城、短视频、商品详情等），系统会对优质内容动态倾斜。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜服务内容】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝核心服务包含：\n1️⃣ 流量调控（基于算法进行流量探索与倾斜）\n2️⃣ 内容筛选（优选更易转化的视频/图文/直播）\n3️⃣ 发券补贴（联合决策，智能调配补贴）\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜费率建议】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n建议先采纳平台建议的“托管服务费率”。\n平台会结合品类软件服务费、近30天增量宝/获客卡投入与行业竞争情况，给出建议服务费率；费率偏低可能导致效果不及预期。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜调价节奏】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝托管服务费率可调整，但建议不要频繁调整：\n- 单日最多调整2次\n- 每次调整间隔≥4小时\n- 调整后新费率会在1小时内逐渐生效\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜效果评估】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n建议把观察周期拉长到1–3周，并结合店铺历史核销周期做对比：\n对比“开启后第N周核销金额”与“开启前N周平均核销金额”。\n平台实收服务费≈核销订单总金额×订单维度生效的托管服务费率。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜退出机制】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n当前出单宝不支持线上直接暂停/退出/终止。\n如果阶段性不想使用，可以通过调整托管服务费来控制投入，费率最低可设置为与软件服务费一致。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜权限说明】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝目前仅支持来客“商家总户”进行操作。\n店员号没有配置权限，展示信息建议不要作为决策依据。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜与增量宝/获客卡】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝已包含增量宝与获客卡的部分能力；为保障投产比，增量宝/获客卡能力会在出单宝开通时自动失效。\n若仍有获客卡使用需求，建议联系商务经理或客服咨询。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜与其他营销】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝的托管服务费与超值券/立减等营销产品获取的订单可能同时收取。\n建议先把投放目标与预算口径统一，再评估组合策略。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜线下订单】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n线下交易渠道（线下扫码、在线买单功能）的订单，按出单宝服务费最低值收取。\n门店如果线上线下并行经营，建议把口径先梳理清楚，便于核算。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜叠加本地推】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝与本地推可以同时投放，相当于对目标用户进行“流量+补贴”的加码。\n建议综合评估出单宝与本地推的成本投入，适当做预算与出价调整。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜快速算账】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n手册里有个简单口径：抖音渠道投入≈订单核销额×托管服务费率。\n相对多工具拆账，这种综合口径更容易对齐团队的经营复盘与对比。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜适配场景】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n如果你也遇到这些情况，可以考虑了解出单宝：\n- 工具太多，决策成本高\n- 成本算不清，投后贡献难衡量\n- 配完没时间盯和调\n出单宝提供一体化托管方案，帮助释放人力。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜开通步骤】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n开启出单宝仅需2步：\n1️⃣ 进入来客APP首页-出单宝入口（或来客APP-巨量本地推入口）\n2️⃣ 确认托管服务费/阅读协议并立即开启\n建议开通前先对齐适用范围与商品类型。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜最低费率】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝托管服务费率不可低于最低托管服务费：即商品所属品类的软件服务费率。\n若商家多品类费率不一致，会按历史30天的品类成交金额分布加权计算；分品类表达需求可联系商务经理/客服申请。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜流量渠道】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝会结合算法筛选优质内容，分发到短视频推荐、直播推荐、搜索列表等位置。\n常见入口样式包含POI锚点引流、短视频、门店卡、商品卡、综搜-门店卡、频道入口等。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝｜放量说明】\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n手册提示：出单宝仍在逐步放量阶段，仅受邀商家可见产品入口。\n如果暂时看不到入口，也可以先把规则与口径了解清楚，等入口开放后更快上手。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" }
+                ],
+                rule: []
             },
             friendly: {
                 business: [
@@ -1796,7 +1837,30 @@
                 live: [
                     "🎉【发现好课啦！】\n《节点冲高-商家直播进阶课》-西餐异国菜\n\n850 人都在学的好课！\n\n来和大家分享一下！\n😊 课程内容很接地气！\n😊 学完就能用得上！\n😊 帮助我们把生意做得更好！\n\n快来一起学习吧！✨\n\n#抖音生活服务 #学习成长 #干货分享\n\n🔗 观看链接：https://lifexue.com/live/list",
                     "✨【今日推荐好课！】\n码上有生意—初级扫码实操课\n\n10299 人正在学习中！\n\n真的很实用哦！\n• 都是实实在在的干货！\n• 老师讲得特别清楚！\n• 看完就能动手实践！\n\n分享给大家，不要错过呀！🥳\n\n#抖音生活服务 #好课推荐 #实用干货\n\n🔗 课程链接：https://lifexue.com/live/list"
-                ]
+                ],
+                product: [
+                    { text: "🧰【出单宝】我最近在看～它是抖音生活服务的“智能托管”产品。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n你只要设个托管服务费率，系统会自动做流量获取、发券补贴、内容筛选这些事，目标是把核销金额做得更好。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】一个我觉得很关键的点：出单宝是“先核销再计费”。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n不核销就不产生费用，账会更好算～\n开启后原平台软件服务费也不再单独收取。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】想试的老板可以先自查下：\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n目前主要对餐饮、综合商家开放；商品类型只支持团购品和代金券～\n另外商商联营/平行/共管经营暂不支持。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】生效范围我给大家划重点：全店所有核销订单统一生效。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n并且是全渠道流量（POI/直播/搜索/短视频/商品详情等），系统会把更优质的内容推到更合适的位置。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】里包含的事儿大概是：流量调控 + 内容优选 + 发券补贴。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n你不用一个个工具去试，系统会帮你做组合和分配～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】费率怎么设更舒服？手册建议先采纳平台建议的托管服务费率～\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n平台会结合你的品类服务费、近30天营销投入和行业竞争情况给推荐，设太低可能效果不明显。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】如果要调价，别太频繁～\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n建议单日最多2次、每次间隔≥4小时；新费率会在1小时内逐渐生效，给模型点时间探索会更稳。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】效果怎么判断更靠谱？建议按周看：1–3周更合适。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n对比“开启后第N周核销金额” vs “开启前N周平均核销金额”，结合自己店的核销周期来评估～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】想知道能不能“暂停/退出”？手册里写的是：目前不支持线上直接暂停/退出/终止。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n如果阶段性不想用，可以把托管费率调到最低（与软件服务费一致）来控制投入。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】权限小提醒：目前只支持来客“商家总户”操作。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n店员号没有配置权限，看到的信息建议先别拿来做判断哈～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】开启后，增量宝/获客卡会自动失效（投放计划暂停）。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n如果你还有获客卡的需求，可以联系商务经理/客服问问怎么配合～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】也可能和超值券/立减这些一起用～\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n手册提示：有些订单可能会同时收取，建议先把预算口径对齐，再做组合会更清楚。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】线下扫码/在线买单这类线下订单，按出单宝服务费最低值收取。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n线上线下同时做的店，建议先把核算口径统一一下～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】和本地推可以一起投～相当于“流量+补贴”加码。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n建议综合看两边的投入，慢慢调预算和出价，别一下子改太猛～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】成本想快速算？手册给了个简单口径：抖音渠道投入≈核销额×托管服务费率。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n比起一堆工具拆账，这个更好对齐复盘～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】适合谁？如果你觉得：工具太多不好选、成本不好算、配置完没时间盯…\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n出单宝这种一体化托管思路可以了解下，把复杂留给系统～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】开通很简单：基本两步就行～\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n来客APP首页进入出单宝入口（或来客APP-巨量本地推入口）→确认费率/读协议→立即开启。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】最低费率规则：托管服务费率不能低于最低值（一般是品类的软件服务费率）。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n多品类费率不一致时会加权计算；需要分品类表达的话可以联系商务经理/客服申请能力。\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】流量渠道这块也挺全：POI锚点、短视频、门店卡、商品卡、综搜入口、直播推荐…\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n系统会把更容易转化的内容推到合适的位置，帮助提升曝光和转化～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" },
+                    { text: "🧰【出单宝】最后一个提醒：手册写出单宝还在逐步放量阶段，仅受邀商家可见入口。\n出单宝是抖音生活服务的智能托管产品，商家设置托管服务费率后平台自动做流量/发券等营销动作。\n如果你暂时看不到入口，也可以先把规则和口径了解清楚，等入口开放更快上手～\n\n更多详情请看：https://bytedance.larkoffice.com/wiki/KEG2wE0T2iKAePkP4PfcVeuWn0e", image: "出单宝-配图.jpeg" }
+                ],
+                rule: []
             }
         };
         
@@ -1808,7 +1872,11 @@
             currentImage: '',
             livePreferredUsed: false,
             searchKeyword: '',
-            searchPool: null
+            searchPool: null,
+            pickSeed: 0,
+            currentIndex: null,
+            currentTypeKey: '',
+            currentSearchKey: ''
         };
 
         function normalizeSearchTokens(input) {
@@ -1866,6 +1934,100 @@
             t = t.replace(/ +\n/g, '\n');
             t = t.replace(/\n{3,}/g, '\n\n');
             return t.trim();
+        }
+
+        function decorateProductCopy(text, persona) {
+            const raw = String(text || '').trim();
+            if (!raw) return raw;
+            const lines = raw.split('\n');
+            const out = [];
+
+            for (let i = 0; i < lines.length; i++) {
+                let ln = lines[i] || '';
+
+                if (i === 0) {
+                    out.push(ln);
+                    continue;
+                }
+
+                if (/^更多详情请看：/.test(ln)) {
+                    ln = ln.replace(/^更多详情请看：/, '🔗 更多详情请看：');
+                    if (out.length > 0 && out[out.length - 1] !== '') out.push('');
+                    out.push(ln);
+                    continue;
+                }
+
+                if (/^出单宝是抖音生活服务的智能托管产品/.test(ln)) {
+                    const prefix = persona === 'friendly' ? '✨ ' : '📌 ';
+                    if (!/^[✨📌]/.test(ln)) ln = prefix + ln;
+                    out.push(ln);
+                    if (out[out.length - 1] !== '') out.push('');
+                    continue;
+                }
+
+                if (/^建议/.test(ln) && !/^[✅]/.test(ln)) {
+                    ln = `✅ ${ln}`;
+                    if (out.length > 0 && out[out.length - 1] !== '') out.push('');
+                    out.push(ln);
+                    continue;
+                }
+
+                if (/^当前出单宝不支持|^出单宝不支持|^店员号没有配置权限/.test(ln) && !/^[⚠️]/.test(ln)) {
+                    ln = `⚠️ ${ln}`;
+                    if (out.length > 0 && out[out.length - 1] !== '') out.push('');
+                    out.push(ln);
+                    continue;
+                }
+
+                if (/^(出单宝目前|目前主要|经营模式|商品类型|线下交易渠道)/.test(ln) && !/^[🧩📝📍]/.test(ln)) {
+                    ln = `📝 ${ln}`;
+                    if (out.length > 0 && out[out.length - 1] !== '') out.push('');
+                    out.push(ln);
+                    continue;
+                }
+
+                if (/^(平台实收服务费|抖音渠道投)/.test(ln) && !/^[🧮]/.test(ln)) {
+                    ln = `🧮 ${ln}`;
+                    if (out.length > 0 && out[out.length - 1] !== '') out.push('');
+                    out.push(ln);
+                    continue;
+                }
+
+                if (out.length > 0 && out[out.length - 1] !== '') {
+                    const addGap =
+                        /^(出单宝按|开启出单宝后|线下交易渠道|出单宝托管服务费率|出单宝作用于|流量渠道为)/.test(ln) ||
+                        /^[🧮✅⚠️📝]/.test(ln);
+                    if (addGap) out.push('');
+                }
+                out.push(ln);
+            }
+
+            return out.join('\n').trim();
+        }
+
+        function escapeHtml(text) {
+            return String(text || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderMomentsRichText(text) {
+            const raw = String(text || '');
+            const re = /(https?:\/\/[^\s]+)/g;
+            let out = '';
+            let lastIndex = 0;
+            raw.replace(re, (m, url, idx) => {
+                out += escapeHtml(raw.slice(lastIndex, idx));
+                const safeUrl = escapeHtml(url);
+                out += `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeUrl}</a>`;
+                lastIndex = idx + m.length;
+                return m;
+            });
+            out += escapeHtml(raw.slice(lastIndex));
+            return out.replace(/\n/g, '<br/>');
         }
 
         function getNextHoliday(baseDate) {
@@ -2077,6 +2239,58 @@
                 }
             } catch (e) {
                 console.warn('加载课程素材失败，使用默认内容:', e);
+            }
+        }
+
+        function buildRuleMomentTemplate(item, persona) {
+            const category = String(item?.category || '').trim();
+            const title = String(item?.title || '').trim();
+            const publishDate = String(item?.date || '').trim();
+            const detailUrl = String(item?.detailUrl || '').trim();
+            const points = Array.isArray(item?.keyPoints) ? item.keyPoints : [];
+            const pointsText = points
+                .slice(0, 5)
+                .map((p, i) => `${i + 1}️⃣ ${String(p || '').trim()}`)
+                .filter(Boolean)
+                .join('\n');
+
+            const header = category ? `📌【规则中心｜${category}】` : '📌【规则中心】';
+            const titleLine = publishDate ? `${title}（${publishDate}）` : title;
+
+            if (persona === 'professional') {
+                return {
+                    text: `${header}\n${titleLine}\n\n核心要点：\n${pointsText}\n\n建议：可以优先关注信息披露是否清晰、宣传口径与实际履约是否一致。\n\n更多详情请看：${detailUrl}`.trim()
+                };
+            }
+
+            return {
+                text: `${header}\n${titleLine}\n\n今天看到一条更新，简单划重点：\n${pointsText}\n\n更多详情请看：${detailUrl}`.trim()
+            };
+        }
+
+        async function loadRuleMaterials() {
+            try {
+                const resp = await fetch('rule_center_materials.json', { cache: 'no-store' });
+                if (!resp.ok) return;
+                const items = await resp.json();
+                if (!Array.isArray(items) || items.length === 0) return;
+
+                const professional = items.map(i => buildRuleMomentTemplate(i, 'professional')).filter(Boolean);
+                const friendly = items.map(i => buildRuleMomentTemplate(i, 'friendly')).filter(Boolean);
+
+                if (professional && professional.length > 0) {
+                    contentLibrary.professional.rule = professional;
+                }
+                if (friendly && friendly.length > 0) {
+                    contentLibrary.friendly.rule = friendly;
+                }
+
+                if (bdState.type === 'rule') {
+                    applyBDSearch(bdState.searchKeyword);
+                    generateBDContent();
+                }
+            } catch (e) {
+                console.warn('加载规则素材失败，使用默认内容:', e);
             }
         }
         
@@ -2444,7 +2658,7 @@
                     card.classList.add('selected');
                     bdState.persona = card.dataset.persona;
                     applyBDSearch(searchInput ? searchInput.value : bdState.searchKeyword);
-                    generateBDContent();
+                    generateBDContent({ keep: true });
                 });
             });
             
@@ -2453,16 +2667,17 @@
                     typeCards.forEach(c => c.classList.remove('selected'));
                     card.classList.add('selected');
                     bdState.type = card.dataset.type;
+                    bdState.livePreferredUsed = false;
                     applyBDSearch(searchInput ? searchInput.value : bdState.searchKeyword);
-                    generateBDContent();
+                    generateBDContent({ reset: true });
                 });
             });
             
-            document.getElementById('regenerateBtn').addEventListener('click', generateBDContent);
+            document.getElementById('regenerateBtn').addEventListener('click', () => generateBDContent({ reroll: true }));
             if (searchBtn) {
                 searchBtn.addEventListener('click', () => {
                     applyBDSearch(searchInput ? searchInput.value : '');
-                    generateBDContent();
+                    generateBDContent({ reset: true });
                 });
             }
             if (searchInput) {
@@ -2470,7 +2685,7 @@
                     if (e.key === 'Enter') {
                         e.preventDefault();
                         applyBDSearch(searchInput.value);
-                        generateBDContent();
+                        generateBDContent({ reset: true });
                     }
                 });
             }
@@ -2478,7 +2693,7 @@
                 searchClearBtn.addEventListener('click', () => {
                     if (searchInput) searchInput.value = '';
                     applyBDSearch('');
-                    generateBDContent();
+                    generateBDContent({ reset: true });
                 });
             }
             document.getElementById('bdDownloadBtn').addEventListener('click', () => {
@@ -2493,10 +2708,10 @@
                 incrementPublishStats();
             });
             
-            generateBDContent();
+            generateBDContent({ reset: true });
         }
         
-        function generateBDContent() {
+        function generateBDContent(opts = {}) {
             const templates = contentLibrary[bdState.persona]?.[bdState.type];
             if (!templates || templates.length === 0) return;
             
@@ -2515,18 +2730,44 @@
                 showToast('当前筛选条件下没有可用素材');
                 return;
             }
-            const randomIndex = Math.floor(Math.random() * candidates.length);
-            const tpl = candidates[randomIndex];
+            const searchKey = String(bdState.searchKeyword || '').trim();
+            const typeKeyChanged = bdState.currentTypeKey !== bdState.type;
+            const searchKeyChanged = bdState.currentSearchKey !== searchKey;
+            const shouldResetIndex = Boolean(opts.reset) || Boolean(opts.reroll) || typeKeyChanged || searchKeyChanged;
+
+            if (!bdState.pickSeed || typeKeyChanged) {
+                bdState.pickSeed = Date.now();
+            }
+            if (opts.reroll) {
+                bdState.pickSeed = (bdState.pickSeed || Date.now()) + 1;
+            }
+            if (shouldResetIndex) {
+                bdState.currentIndex = null;
+            }
+
+            let idx = 0;
+            if (opts.keep && typeof bdState.currentIndex === 'number') {
+                idx = Math.abs(bdState.currentIndex) % candidates.length;
+            } else {
+                idx = Math.abs(bdState.pickSeed) % candidates.length;
+                bdState.currentIndex = idx;
+            }
+            bdState.currentTypeKey = bdState.type;
+            bdState.currentSearchKey = searchKey;
+
+            const tpl = candidates[idx];
 
             if (typeof tpl === 'string') {
                 bdState.currentText = stripHashtagTags(tpl);
                 bdState.currentImage = '';
             } else {
-                bdState.currentText = stripHashtagTags(tpl?.text || '');
+                const baseText = stripHashtagTags(tpl?.text || '');
+                bdState.currentText = bdState.type === 'product' ? decorateProductCopy(baseText, bdState.persona) : baseText;
                 bdState.currentImage = tpl?.image || '';
             }
 
-            document.getElementById('momentsContent').textContent = bdState.currentText;
+            const momentsEl = document.getElementById('momentsContent');
+            if (momentsEl) momentsEl.innerHTML = renderMomentsRichText(bdState.currentText);
             const imagesEl = document.getElementById('momentsImages');
             const imgEl = document.getElementById('momentsCoverImg');
             const dlBtn = document.getElementById('bdDownloadBtn');
@@ -2792,10 +3033,13 @@
                 const el = document.getElementById(containerId);
                 if (!el) return;
                 const days = diffDays === null || diffDays === undefined ? '-' : Math.max(0, diffDays);
+                const sub = String(subText || '').trim();
+                const isDate = /^\d{1,2}\.\d{1,2}$/.test(sub);
+                const chipClass = isDate ? 'countdown-chip countdown-chip-date' : 'countdown-chip';
                 el.innerHTML = `<div class="countdown-item">
                     <div class="countdown-meta">
                         <div class="countdown-meta-title">${titleText}</div>
-                        ${subText ? `<div class="countdown-meta-sub"><span class="countdown-chip">${subText}</span></div>` : ''}
+                        ${sub ? `<div class="countdown-meta-sub"><span class="${chipClass}">${sub}</span></div>` : ''}
                     </div>
                     <div class="countdown-value">
                         <span class="countdown-value-num">${days}</span>
@@ -2805,12 +3049,12 @@
             }
 
             if (nextBigDay) {
-                renderSingleCountdown('bigdayCountdownList', `目标日 ${formatMd(nextBigDay.date)}`, '', nextBigDay.diffDays);
+                renderSingleCountdown('bigdayCountdownList', '目标日', formatMd(nextBigDay.date), nextBigDay.diffDays);
             } else {
                 renderSingleCountdown('bigdayCountdownList', '未录入', '告诉我日期我来录入', null);
             }
 
-            renderSingleCountdown('paydayCountdownList', `发放日 ${formatMd(nextPayday.date)}`, '', nextPayday.diffDays);
+            renderSingleCountdown('paydayCountdownList', '发放日', formatMd(nextPayday.date), nextPayday.diffDays);
 
             if (nextHoliday) {
                 renderSingleCountdown('holidayCountdownList', nextHoliday.name, formatMd(nextHoliday.date), nextHoliday.diffDays);
@@ -2871,7 +3115,8 @@
                 // 尝试加载JSON，但即使失败也继续初始化
                 Promise.all([
                     loadLiveMaterials().catch(e => console.warn('加载直播素材失败:', e)),
-                    loadCourseBusinessMaterials().catch(e => console.warn('加载课程素材失败:', e))
+                    loadCourseBusinessMaterials().catch(e => console.warn('加载课程素材失败:', e)),
+                    loadRuleMaterials().catch(e => console.warn('加载规则素材失败:', e))
                 ]).finally(() => {
                     initBDSelectors();
                     updateStatsDisplay();

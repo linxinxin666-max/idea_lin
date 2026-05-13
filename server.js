@@ -23,6 +23,9 @@ const REMINDER_HM = (process.env.REMINDER_HM || '12:00').trim();
 const REFRESH_HM = (process.env.REFRESH_HM || '11:55').trim();
 const EVENING_REMINDER_HM = (process.env.EVENING_REMINDER_HM || '19:00').trim();
 const EVENING_REFRESH_HM = (process.env.EVENING_REFRESH_HM || '18:55').trim();
+const REMINDER_CATCHUP_MINUTES = Number(process.env.REMINDER_CATCHUP_MINUTES || 120);
+const EVENING_REMINDER_CATCHUP_MINUTES = Number(process.env.EVENING_REMINDER_CATCHUP_MINUTES || 120);
+const DISABLE_MANAGED_TUNNEL_WHEN_PUBLIC_URL_SET = (process.env.DISABLE_MANAGED_TUNNEL_WHEN_PUBLIC_URL_SET || 'true').trim() === 'true';
 const ENABLE_WEBHOOK_SUBSCRIPTIONS = (process.env.ENABLE_WEBHOOK_SUBSCRIPTIONS || 'true').trim() === 'true';
 const APPBOT_STATE_FILE = path.join(__dirname, 'appbot_state.json');
 
@@ -141,6 +144,19 @@ function buildDemoUrl(query = '') {
 
 function writePublicDemoUrl(url) {
   fs.writeFileSync(PUBLIC_DEMO_URL_FILE, url + '\n');
+}
+
+function hasStablePublicDemoUrlConfigured() {
+  const envUrl = (process.env.PUBLIC_DEMO_URL || '').trim();
+  let fileUrl = '';
+  try {
+    fileUrl = fs.readFileSync(PUBLIC_DEMO_URL_FILE, 'utf8').trim();
+  } catch (e) {}
+  const u = (envUrl || fileUrl).trim();
+  if (!u) return false;
+  if (/trycloudflare\.com/i.test(u)) return false;
+  if (/localhost|127\.0\.0\.1/i.test(u)) return false;
+  return true;
 }
 
 function stopManagedTunnel() {
@@ -340,11 +356,11 @@ async function sendDailyStats(now) {
     return false;
   }
   const message = buildDailyStatsMessage(dayKey, summary);
-  const ok = await sendFeishuMessage(DAILY_STATS_WEBHOOK, message);
-  if (ok) {
+  const r = await sendFeishuMessage(DAILY_STATS_WEBHOOK, message);
+  if (r.success) {
     console.log(`📊 已发送公网数据日报(${dayKey})`);
   }
-  return ok;
+  return r.success;
 }
 
 // 读取订阅数据
@@ -360,16 +376,52 @@ function saveSubscriptions(subscriptions) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(subscriptions, null, 2));
 }
 
+function summarizeWebhookResponse(data) {
+  try {
+    if (!data) return '';
+    if (typeof data === 'string') return data.slice(0, 500);
+    if (typeof data !== 'object') return String(data).slice(0, 500);
+    const summary = {};
+    if (Object.prototype.hasOwnProperty.call(data, 'code')) summary.code = data.code;
+    if (Object.prototype.hasOwnProperty.call(data, 'msg')) summary.msg = data.msg;
+    if (Object.prototype.hasOwnProperty.call(data, 'StatusCode')) summary.StatusCode = data.StatusCode;
+    if (Object.prototype.hasOwnProperty.call(data, 'StatusMessage')) summary.StatusMessage = data.StatusMessage;
+    if (Object.prototype.hasOwnProperty.call(data, 'error')) summary.error = data.error;
+    const s = JSON.stringify(Object.keys(summary).length ? summary : data);
+    return s.length > 500 ? s.slice(0, 500) + '…' : s;
+  } catch (e) {
+    return '';
+  }
+}
+
+function isWebhookSendOk(data) {
+  if (!data) return true;
+  if (typeof data === 'object') {
+    if (Object.prototype.hasOwnProperty.call(data, 'code')) return data.code === 0;
+    if (Object.prototype.hasOwnProperty.call(data, 'StatusCode')) return data.StatusCode === 0;
+    if (Object.prototype.hasOwnProperty.call(data, 'statusCode')) return data.statusCode === 0;
+  }
+  return true;
+}
+
 // 发送飞书消息
 async function sendFeishuMessage(webhook, content) {
   try {
-    await axios.post(webhook, content, {
+    const resp = await axios.post(webhook, content, {
       headers: { 'Content-Type': 'application/json' }
     });
-    return true;
+    const data = resp ? resp.data : null;
+    const success = isWebhookSendOk(data);
+    if (!success) {
+      console.error('发送消息失败:', summarizeWebhookResponse(data));
+    }
+    return { success, data };
   } catch (error) {
-    console.error('发送消息失败:', error.message);
-    return false;
+    const msg = error && error.message ? error.message : String(error);
+    const data = error && error.response ? error.response.data : null;
+    const detail = summarizeWebhookResponse(data);
+    console.error('发送消息失败:', detail ? `${msg} ${detail}` : msg);
+    return { success: false, error: msg, data };
   }
 }
 
@@ -543,8 +595,8 @@ async function sendReminderIfNeeded({ sub, now, slot }) {
   if (today < nextCycle) return false;
 
   const message = buildReminderMessage(sub);
-  const success = await sendFeishuMessage(sub.webhook, message);
-  if (!success) return false;
+  const r = await sendFeishuMessage(sub.webhook, message);
+  if (!r.success) return false;
 
   sub.lastReminder = now.toISOString();
   if (slot === 'noon') {
@@ -570,32 +622,39 @@ async function onTick() {
   const refreshMin = Number((REFRESH_HM.split(':')[0] || '11')) * 60 + Number((REFRESH_HM.split(':')[1] || '55'));
   const reminderMin = Number((REMINDER_HM.split(':')[0] || '12')) * 60 + Number((REMINDER_HM.split(':')[1] || '00'));
   const shouldRefreshNoon = minutes >= refreshMin && minutes < reminderMin;
-  const shouldSendNoon = minutes >= reminderMin && minutes < reminderMin + 5;
+  const shouldSendNoon = minutes >= reminderMin && minutes < reminderMin + Math.max(1, REMINDER_CATCHUP_MINUTES);
   const eveningRefreshMin = Number((EVENING_REFRESH_HM.split(':')[0] || '18')) * 60 + Number((EVENING_REFRESH_HM.split(':')[1] || '55'));
   const eveningReminderMin = Number((EVENING_REMINDER_HM.split(':')[0] || '19')) * 60 + Number((EVENING_REMINDER_HM.split(':')[1] || '00'));
   const shouldRefreshEvening = minutes >= eveningRefreshMin && minutes < eveningReminderMin;
-  const shouldSendEvening = minutes >= eveningReminderMin && minutes < eveningReminderMin + 5;
+  const shouldSendEvening = minutes >= eveningReminderMin && minutes < eveningReminderMin + Math.max(1, EVENING_REMINDER_CATCHUP_MINUTES);
 
-  if (shouldRefreshNoon && lastTunnelRefreshDayNoon !== today) {
-    lastTunnelRefreshDayNoon = today;
-    await refreshPublicLink(now, '12点前刷新');
-  }
+  const disableManagedTunnel = DISABLE_MANAGED_TUNNEL_WHEN_PUBLIC_URL_SET && hasStablePublicDemoUrlConfigured();
+  if (disableManagedTunnel) {
+    stopManagedTunnel();
+  } else {
+    if (shouldRefreshNoon && lastTunnelRefreshDayNoon !== today) {
+      lastTunnelRefreshDayNoon = today;
+      await refreshPublicLink(now, '12点前刷新');
+    }
 
-  if (shouldRefreshEvening && lastTunnelRefreshDayEvening !== today) {
-    lastTunnelRefreshDayEvening = today;
-    await refreshPublicLink(now, '19点前刷新');
+    if (shouldRefreshEvening && lastTunnelRefreshDayEvening !== today) {
+      lastTunnelRefreshDayEvening = today;
+      await refreshPublicLink(now, '19点前刷新');
+    }
   }
 
   const slot = shouldSendNoon ? 'noon' : shouldSendEvening ? 'evening' : '';
   if (!slot) return;
 
-  if (slot === 'noon' && lastTunnelRefreshDayNoon !== today) {
-    lastTunnelRefreshDayNoon = today;
-    await refreshPublicLink(now, '12点前补刷新');
-  }
-  if (slot === 'evening' && lastTunnelRefreshDayEvening !== today) {
-    lastTunnelRefreshDayEvening = today;
-    await refreshPublicLink(now, '19点前补刷新');
+  if (!disableManagedTunnel) {
+    if (slot === 'noon' && lastTunnelRefreshDayNoon !== today) {
+      lastTunnelRefreshDayNoon = today;
+      await refreshPublicLink(now, '12点前补刷新');
+    }
+    if (slot === 'evening' && lastTunnelRefreshDayEvening !== today) {
+      lastTunnelRefreshDayEvening = today;
+      await refreshPublicLink(now, '19点前补刷新');
+    }
   }
 
   if (!ENABLE_WEBHOOK_SUBSCRIPTIONS) return;
@@ -627,9 +686,8 @@ app.post('/api/test-reminder/:id', async (req, res) => {
   }
 
   const message = buildReminderMessage(subscription);
-  const success = await sendFeishuMessage(subscription.webhook, message);
-  
-  res.json({ success });
+  const r = await sendFeishuMessage(subscription.webhook, message);
+  res.json({ success: r.success, response: r.data, error: r.error || null });
 });
 
 app.post('/api/public/track', (req, res) => {

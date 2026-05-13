@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1440" viewBox="0 0 1080 1440">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="0.55" stop-color="#0b1f3a"/>
+      <stop offset="1" stop-color="#1a1033"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="0.55" stop-color="#fb7185"/>
+      <stop offset="1" stop-color="#60a5fa"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1080" height="1440" fill="url(#bg)"/>
+  <circle cx="180" cy="220" r="180" fill="#38bdf8" opacity="0.10"/>
+  <circle cx="940" cy="160" r="220" fill="#fb7185" opacity="0.10"/>
+  <circle cx="860" cy="1260" r="280" fill="#fbbf24" opacity="0.08"/>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="160" width="900" height="1120" rx="32" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.10)" stroke-width="2"/>
+  </g>
+
+  <rect x="132" y="210" width="816" height="10" rx="5" fill="url(#accent)" opacity="0.95"/>
+
+  <text x="132" y="340" fill="#ffffff" font-size="72" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+    出单宝
+  </text>
+  <text x="132" y="410" fill="rgba(255,255,255,0.78)" font-size="34" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+    产品手册（对外）｜要点速览
+  </text>
+
+  <g>
+    <rect x="132" y="480" width="816" height="220" rx="24" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.10)" stroke-width="2"/>
+    <text x="168" y="548" fill="#ffffff" font-size="36" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+      当前状态
+    </text>
+    <text x="168" y="610" fill="rgba(255,255,255,0.86)" font-size="30" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+      产品仍在逐步放量阶段
+    </text>
+    <text x="168" y="670" fill="rgba(255,255,255,0.76)" font-size="28" font-weight="500" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+      仅受邀商家可见产品入口
+    </text>
+  </g>
+
+  <g>
+    <rect x="132" y="740" width="816" height="360" rx="24" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.10)" stroke-width="2"/>
+    <text x="168" y="808" fill="#ffffff" font-size="36" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+      温和提醒
+    </text>
+    <text x="168" y="878" fill="rgba(255,255,255,0.82)" font-size="28" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+      1）如暂未看到入口，属于正常情况
+    </text>
+    <text x="168" y="938" fill="rgba(255,255,255,0.82)" font-size="28" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+      2）建议关注后续放量与上线节奏
+    </text>
+    <text x="168" y="998" fill="rgba(255,255,255,0.82)" font-size="28" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+      3）对外沟通建议用“受邀可见、逐步放量”
+    </text>
+  </g>
+
+  <text x="132" y="1200" fill="rgba(255,255,255,0.70)" font-size="24" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+    更多详情：请配合产品手册链接一起转发
+  </text>
+  <text x="132" y="1260" fill="rgba(255,255,255,0.55)" font-size="22" font-weight="500" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif">
+    PR编号：2026011721415
+  </text>
+</svg>
