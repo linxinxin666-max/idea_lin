@@ -26,6 +26,8 @@ jobs:
       - uses: actions/configure-pages@v5
       - name: Prepare site
         shell: bash
+        env:
+          GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
         run: |
           set -euo pipefail
           mkdir -p site
@@ -33,6 +35,11 @@ jobs:
           cp live_materials.json course_materials_business.json rule_center_materials.json site/
           if [ -d posters ]; then cp -R posters site/posters; fi
           if [ -f "出单宝-配图.jpeg" ]; then cp "出单宝-配图.jpeg" site/; fi
+          if [ -n "${GA_MEASUREMENT_ID:-}" ]; then
+            sed -i "s/__GA_MEASUREMENT_ID__/${GA_MEASUREMENT_ID}/g" site/demo.html
+          else
+            sed -i "s/__GA_MEASUREMENT_ID__//g" site/demo.html
+          fi
           touch site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -8,6 +8,21 @@
     <meta http-equiv="Expires" content="0">
     <meta name="referrer" content="no-referrer">
     <title>idea creator - 抖音生活服务素材神器</title>
+    <script>
+        (function () {
+            const GA_ID = '__GA_MEASUREMENT_ID__';
+            if (!/^G-[A-Z0-9]+$/i.test(GA_ID)) return;
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { window.dataLayer.push(arguments); }
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', GA_ID, { send_page_view: true });
+            const s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID);
+            document.head.appendChild(s);
+        })();
+    </script>
     <style>
         * {
             margin: 0;
@@ -2459,6 +2474,14 @@
         function sendPublicTrack(payload) {
             const url = '/api/public/track';
             try {
+                if (typeof window.gtag === 'function' && payload && payload.event) {
+                    window.gtag('event', String(payload.event), {
+                        ok: payload.ok === true ? 1 : payload.ok === false ? 0 : undefined,
+                        visitor_id: payload.visitorId || undefined
+                    });
+                }
+            } catch (e) {}
+            try {
                 if (navigator.sendBeacon) {
                     const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
                     navigator.sendBeacon(url, blob);
@@ -2567,6 +2590,7 @@
                 showToast('没有可下载的图片');
                 return;
             }
+            trackPublicEvent('download', { count: list.length });
             showToast(isIOSOrWeCom() ? '已打开图片，长按保存到相册' : '已触发图片下载');
             downloadImages(list).then((res) => {
                 if (res?.mode === 'download') return;
